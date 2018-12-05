@@ -18,6 +18,6 @@ public class TestActivity extends AppCompatActivity {
         month.setText(getIntent().getIntExtra("month", 1) + "");
         year.setText(getIntent().getIntExtra("year", 1970) + "");
         year.setText(getIntent().getIntExtra("year", 1970) + " год");
-
+        year.setText(getIntent().getIntExtra("year", 1970) + " год12");
     }
 }
