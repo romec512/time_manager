@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void OnClick(View v){
         TextView tv = new TextView(MainActivity.this);
-        ScrollView sv = (ScrollView)findViewById(R.id.ScrollView);
+        LinearLayout sv = (LinearLayout)findViewById(R.id.Scroll_layout);
+        tv.setText("Сегодняшняя дата : " + MainActivity.this.day + " - " + MainActivity.this.month + " - " + MainActivity.this.year);
         sv.addView(tv);
-        tv.setText("Сегодняшняя дата :" + day + " - "  + MainActivity.this.month + " - " + MainActivity.this.year);
     }
 }
