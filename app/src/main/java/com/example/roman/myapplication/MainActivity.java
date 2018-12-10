@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("day", dayOfMonth);
                 intent.putExtra("test", "test");
                 startActivity(intent);
+
             }
         });
     }
