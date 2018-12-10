@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.day = dayOfMonth;
                 MainActivity.this.month = month;
                 MainActivity.this.year = year;
+
             }
         });
     }
