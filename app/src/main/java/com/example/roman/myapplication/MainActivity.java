@@ -15,6 +15,7 @@ import Source.DBHelper;
 
 public class MainActivity extends AppCompatActivity {
     private int year, month, day;
+    private String fullDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.day = dayOfMonth;
                 MainActivity.this.month = month;
                 MainActivity.this.year = year;
+                fullDate = dayOfMonth + "-" + month + "-" + year;
 
             }
         });
@@ -35,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout sv = (LinearLayout)findViewById(R.id.Scroll_layout);
         DBHelper dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.query("tasks", null, null,null,null, null, "task_id");
+        String [] args = new String[]{ fullDate };
+        Cursor cursor = db.query("tasks", null, "task_deadline = ?", args
+        ,null, null, "task_id");
         if(cursor.moveToFirst()){
             String str;
             do {
@@ -54,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
      */
     public void OpenNewTask(View v){
         Intent intent = new Intent(MainActivity.this, NewTask.class);
+        intent.putExtra("day", this.day);
+        intent.putExtra("month", this.month);
+        intent.putExtra("year", this.year);
         startActivity(intent);
     }
 }

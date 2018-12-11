@@ -19,6 +19,8 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
     DBHelper dbHelper;
 
+    String deadline;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,8 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
         dbHelper = new DBHelper(this);
+        deadline = getIntent().getIntExtra("day", 1) + "-" + getIntent().getIntExtra("month", 1) +
+                "-" + getIntent().getIntExtra("year", 1970);
     }
 
     @Override
@@ -46,7 +50,7 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
             case R.id.btnSave:
                 contentValues.put("task_comment", question);
                 contentValues.put("task_run_time", time);
-                contentValues.put("task_deadline", "12-12-2018");
+                contentValues.put("task_deadline", deadline);
                 contentValues.put("task_priority", (int)rating);
 
                 database.insert("tasks", null, contentValues);
