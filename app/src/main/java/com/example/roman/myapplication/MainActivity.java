@@ -1,6 +1,8 @@
 package com.example.roman.myapplication;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import Source.DBHelper;
 
 public class MainActivity extends AppCompatActivity {
     private int year, month, day;
@@ -28,9 +32,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void OnClick(View v){
-        TextView tv = new TextView(MainActivity.this);
         LinearLayout sv = (LinearLayout)findViewById(R.id.Scroll_layout);
-        tv.setText("Сегодняшняя дата : " + MainActivity.this.day + " - " + MainActivity.this.month + " - " + MainActivity.this.year);
-        sv.addView(tv);
+        DBHelper dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.query("tasks", null, null,null,null, null, "task_id");
+        if(cursor.moveToFirst()){
+            String str;
+            do {
+                str = "";
+                for(String columnName : cursor.getColumnNames()){
+                    str = str.concat(columnName + ": " + cursor.getString(cursor.getColumnIndex(columnName)));
+                }
+                TextView tv = new TextView(MainActivity.this);
+                tv.setText(str);
+                sv.addView(tv);
+            } while (cursor.moveToNext());
+        }
+    }
+    /*
+        метод нажатия на кнопку добавления задачи
+     */
+    public void OpenNewTask(View v){
+        Intent intent = new Intent(MainActivity.this, NewTask.class);
+        startActivity(intent);
     }
 }

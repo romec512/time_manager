@@ -7,23 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 import Source.DBHelper;
 
 public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
     Button btnSave;
-    EditText etTime, etQuestion;
+    EditText taskRunTime, taskComment;
+    RatingBar ratingBar;
 
     DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_new_task);
 
-        etQuestion = (EditText) findViewById(R.id.etQuestion);
-        etTime = (EditText) findViewById(R.id.etTime);
+        taskComment = (EditText) findViewById(R.id.etQuestion);
+        taskRunTime = (EditText) findViewById(R.id.etTime);
+        ratingBar = (RatingBar) findViewById(R.id.rating);
 
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
@@ -32,18 +35,21 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        String question = etQuestion.getText().toString();
-        String time = etTime.getText().toString();
+        String question = taskComment.getText().toString();
+        int time = Integer.parseInt(taskRunTime.getText().toString());
+        float rating = ratingBar.getRating();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
         switch (view.getId()){
             case R.id.btnSave:
-                contentValues.put(DBHelper.KEY_QUESTION, question);
-                contentValues.put(DBHelper.KEY_TIME, time);
+                contentValues.put("task_comment", question);
+                contentValues.put("task_run_time", time);
+                contentValues.put("task_deadline", "12-12-2018");
+                contentValues.put("task_priority", (int)rating);
 
-                database.insert(DBHelper.TABLE_CONTACTS, null, contentValues);
+                database.insert("tasks", null, contentValues);
                 break;
         }
     }
