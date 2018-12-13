@@ -17,7 +17,7 @@
         android:textSize="115px"
         android:gravity="center"
         android:text="14 Ноября"
-        android:fontFamily="@font/RobotoSlab-Regular"/>
+        android:fontFamily="@font/roboto_slab_regular"/>
 
 
     <LinearLayout

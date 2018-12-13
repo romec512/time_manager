@@ -51,23 +51,21 @@ public class MainActivity extends AppCompatActivity {
         List<TaskCard> cards = new ArrayList<>();
         Cursor cursor = db.query("tasks", null, "task_deadline = ?", args
         ,null, null, "task_id");
-        if(cursor.moveToFirst()){
-            String str;
-            do {
-//                str = "";
-//                for(String columnName : cursor.getColumnNames()){
-//                    str = str.concat(columnName + ": " + cursor.getString(cursor.getColumnIndex(columnName)));
-//                }
-                cards.add(new TaskCard(
-                    cursor.getString(cursor.getColumnIndex("task_deadline")),
-                    cursor.getString(cursor.getColumnIndex("task_run_time")).toString(),
-                    cursor.getString(cursor.getColumnIndex("task_comment"))
-                ));
-            } while (cursor.moveToNext());
+        if(cursor != null) {
+            if (cursor.moveToFirst()) {
+                String str;
+                do {
+                    cards.add(new TaskCard(
+                            cursor.getString(cursor.getColumnIndex("task_deadline")),
+                            cursor.getString(cursor.getColumnIndex("task_run_time")).toString(),
+                            cursor.getString(cursor.getColumnIndex("task_comment"))
+                    ));
+                } while (cursor.moveToNext());
+            }
+            TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards);
+            rv.setLayoutManager(new LinearLayoutManager(this));
+            rv.setAdapter(taskCardAdapter);
         }
-        TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(taskCardAdapter);
     }
     /*
         метод нажатия на кнопку добавления задачи
