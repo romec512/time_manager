@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewTask"
+    android:orientation="vertical">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Чем вы будете заниматься?"
+    android:textSize="20dp"
+    />
+<EditText
+    android:id="@+id/etQuestion"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="20sp"
+    />
+<TextView
+    android:textSize="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Оцените время для выполнения:"
+    />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:layout_width="241dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:text="часов"
+        android:textSize="20sp" />
+</LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RatingBar
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:numStars="5"
+        android:stepSize="0.25" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Далее"
+        android:id="@+id/btnSave"
+        android:layout_below="@+id/rating"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>
+</LinearLayout>
