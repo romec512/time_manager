@@ -11,9 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +34,60 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ImageView icon = new ImageView(this);
+        icon.setImageResource(R.drawable.add);
+        final FloatingActionButton fab = new FloatingActionButton.Builder(this).setContentView(icon).build();
+
+        SubActionButton.Builder builder = new SubActionButton.Builder(this);
+
+        ImageView addIcon = new ImageView(this);
+        addIcon.setImageResource(R.drawable.add_green);
+        SubActionButton add = builder.setContentView(addIcon).build();
+
+        ImageView playIcon = new ImageView(this);
+        playIcon.setImageResource(R.drawable.play);
+        SubActionButton play = builder.setContentView(playIcon).build();
+
+        ImageView removeIcon = new ImageView(this);
+        removeIcon.setImageResource(R.drawable.remove);
+        SubActionButton remove = builder.setContentView(removeIcon).build();
+
+
+
+        final FloatingActionMenu fam = new FloatingActionMenu.Builder(this)
+                .addSubActionView(add)
+                .addSubActionView(play)
+                .addSubActionView(remove)
+                .attachTo(fab)
+                .build();
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Вы нажали Add", Toast.LENGTH_SHORT).show();
+                fam.close(true);
+            }
+        });
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Вы нажали Play", Toast.LENGTH_SHORT).show();
+                fam.close(true);
+            }
+        });
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Вы нажали remove", Toast.LENGTH_SHORT).show();
+                fam.close(true);
+            }
+        });
+
+
+
         setContentView(R.layout.activity_main);
         CalendarView cw = (CalendarView) findViewById(R.id.calendarView);
         cw.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

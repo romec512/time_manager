@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".TestActivity" />
         <activity android:name=".db" />
-        <activity android:name=".NewTask"></activity>
+        <activity android:name=".NewTask" />
+        <activity android:name=".Btn_circle" />
+        <activity android:name=".btn_sheets" />
+        <activity android:name=".Sheet"></activity>
     </application>
 
 </manifest>
