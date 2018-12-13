@@ -34,23 +34,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         ImageView icon = new ImageView(this);
-        icon.setImageResource(R.drawable.add);
+        icon.setImageResource(R.mipmap.ic_launcher_round);
         final FloatingActionButton fab = new FloatingActionButton.Builder(this).setContentView(icon).build();
 
         SubActionButton.Builder builder = new SubActionButton.Builder(this);
 
         ImageView addIcon = new ImageView(this);
-        addIcon.setImageResource(R.drawable.add_green);
+        addIcon.setImageResource(R.mipmap.ic_launcher_round);
         SubActionButton add = builder.setContentView(addIcon).build();
 
         ImageView playIcon = new ImageView(this);
-        playIcon.setImageResource(R.drawable.play);
+        playIcon.setImageResource(R.mipmap.ic_launcher_round);
         SubActionButton play = builder.setContentView(playIcon).build();
 
         ImageView removeIcon = new ImageView(this);
-        removeIcon.setImageResource(R.drawable.remove);
+        removeIcon.setImageResource(R.mipmap.ic_launcher_round);
         SubActionButton remove = builder.setContentView(removeIcon).build();
 
 
@@ -85,10 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 fam.close(true);
             }
         });
-
-
-
-        setContentView(R.layout.activity_main);
         CalendarView cw = (CalendarView) findViewById(R.id.calendarView);
         cw.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -124,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
             }
             TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards);
             rv.setLayoutManager(new LinearLayoutManager(this));
+            //Устанавливаем фиксированный размер
+            rv.setHasFixedSize(true);
+            //Запрещаем прокрутку карточек(т.к. они уже размещаются в scrollview и нам не нужна двойная прокрутка)
+            rv.setNestedScrollingEnabled(false);
+            //Задаем ширину под все карточки
+            rv.setMinimumHeight(320 * taskCardAdapter.getItemCount());
             rv.setAdapter(taskCardAdapter);
         }
     }
