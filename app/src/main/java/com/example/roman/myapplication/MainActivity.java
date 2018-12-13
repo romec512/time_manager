@@ -26,15 +26,15 @@ public class MainActivity extends AppCompatActivity {
         SubActionButton.Builder builder = new SubActionButton.Builder(this);
 
         ImageView addIcon = new ImageView(this);
-        addIcon.setImageResource(R.drawable.add_green);
+        addIcon.setImageResource(R.drawable.addbtn);
         SubActionButton add = builder.setContentView(addIcon).build();
 
         ImageView playIcon = new ImageView(this);
-        playIcon.setImageResource(R.drawable.play);
+        playIcon.setImageResource(R.drawable.playbtn);
         SubActionButton play = builder.setContentView(playIcon).build();
 
         ImageView removeIcon = new ImageView(this);
-        removeIcon.setImageResource(R.drawable.remove);
+        removeIcon.setImageResource(R.drawable.pausebtn);
         SubActionButton remove = builder.setContentView(removeIcon).build();
 
 
