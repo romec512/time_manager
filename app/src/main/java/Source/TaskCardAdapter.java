@@ -1,5 +1,6 @@
 package Source;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +16,7 @@ import java.util.List;
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
     List<TaskCard> cards;
 
-
+    public String [] colors= {"#f04f54","#f6903e","#f7d420","#ede674","#e1eec3"};
     public TaskCardAdapter(List<TaskCard> _cards){
         cards = _cards;
     }
@@ -34,6 +35,8 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         taskCardViewHolder.tvStartDate.setText(cards.get(i).start_date);
         taskCardViewHolder.tvEndDate.setText(cards.get(i).stop_date);
         taskCardViewHolder.tvComment.setText(cards.get(i).comment);
+        int colorIndex = cards.get(i).rating - 1;
+        taskCardViewHolder.tvStartDate.setTextColor(Color.parseColor(colors[colorIndex]));
     }
 
     @Override

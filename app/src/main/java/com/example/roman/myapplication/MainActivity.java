@@ -22,6 +22,8 @@ import Source.DBHelper;
 import Source.TaskCard;
 import Source.TaskCardAdapter;
 
+import static java.lang.Integer.parseInt;
+
 public class MainActivity extends AppCompatActivity {
     private int year, month, day;
     private String fullDate;
@@ -61,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
                 cards.add(new TaskCard(
                     cursor.getString(cursor.getColumnIndex("task_deadline")),
                     cursor.getString(cursor.getColumnIndex("task_run_time")).toString(),
-                    cursor.getString(cursor.getColumnIndex("task_comment"))
+                    cursor.getString(cursor.getColumnIndex("task_comment")),
+                     parseInt( cursor.getString(cursor.getColumnIndex("task_priority")))
+
                 ));
             } while (cursor.moveToNext());
         }
