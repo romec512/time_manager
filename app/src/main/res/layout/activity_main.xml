@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <TextView
-
+                android:id="@+id/monthName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="115px"
@@ -43,37 +43,30 @@
                 android:text="Ноябрь"
                 android:fontFamily="@font/roboto_slab_regular"/>
 
-
-            <CalendarView
+            <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="323dp"
-                android:background="#ffffff"
-                tools:layout_editor_absoluteX="18dp"
-                tools:layout_editor_absoluteY="16dp" />
+                android:layout_width="fill_parent"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_height="300dp"
+                app:compactCalendarTargetHeight="300dp"
+                app:compactCalendarTextSize="12sp"
+                app:compactCalendarBackgroundColor="#ffe95451"
+                app:compactCalendarTextColor="#fff"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="#E57373"
+                app:compactCalendarCurrentDayBackgroundColor="#B71C1C"
+                app:compactCalendarMultiEventIndicatorColor="#fff"
+                />
 
-            <Button
-                android:id="@+id/btnOpenNewTask"
+            <TextView
+                android:id="@+id/selected_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
+                android:layout_height="56dp"
+                android:text="TextView"
                 android:fontFamily="@font/roboto_slab_regular"
-                android:layout_gravity="center"
-                android:onClick="OpenNewTask"
-                android:text="Добавить задачу" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="368dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5px"
-                android:background="#ffffff"
-                android:fontFamily="@font/roboto_mono_light"
-                android:layout_gravity="center"
-                android:onClick="OnClick"
-                android:text="Посмотреть задачи"
-                tools:layout_editor_absoluteX="148dp"
-                tools:layout_editor_absoluteY="396dp" />
+                android:textSize="75px"
+                android:textAlignment="center"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

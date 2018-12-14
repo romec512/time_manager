@@ -11,7 +11,7 @@
 
 
     <TextView
-
+        android:id="@+id/selected_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="115px"
@@ -29,6 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="100px"
             android:text="Чем вы будете заниматься?"
             android:textSize="20dp" />
 
@@ -41,6 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="100px"
             android:text="Оцените время для выполнения:"
             android:textSize="20dp" />
 
@@ -51,14 +53,14 @@
 
             <EditText
                 android:id="@+id/etTime"
-                android:layout_width="263dp"
+                android:layout_width="174dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="number" />
 
             <TextView
-                android:layout_width="73dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="10dp"
@@ -67,7 +69,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="361dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
@@ -86,12 +88,12 @@
 
         <Button
             android:id="@+id/btnSave"
-            android:layout_width="384dp"
-            android:layout_height="wrap_content"
+            android:layout_width="171dp"
+            android:layout_height="52dp"
             android:layout_below="@+id/rating"
 
             android:layout_gravity="center"
-            android:background="#ffffff"
+            android:background="@drawable/btn_new_task"
             android:text="Далее"
             android:translationZ="4dp" />
 
