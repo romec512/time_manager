@@ -85,7 +85,7 @@
             android:id="@+id/rating2"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="9.5dp"
             android:layout_height="30dp"
             android:background="@drawable/gradient" />
 

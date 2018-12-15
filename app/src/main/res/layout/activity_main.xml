@@ -75,13 +75,14 @@
                 android:paddingLeft="10dp"
                 android:layout_height="300dp"
                 app:compactCalendarTargetHeight="300dp"
-                app:compactCalendarTextSize="16sp"
+                app:compactCalendarTextSize="15sp"
                 app:compactCalendarBackgroundColor="#ffffff"
                 app:compactCalendarTextColor="#000000"
-                app:compactCalendarCurrentSelectedDayBackgroundColor="#f04f54"
-                app:compactCalendarCurrentDayBackgroundColor="#f6903e"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="#f6903e"
+                app:compactCalendarCurrentDayBackgroundColor="#f04f54"
                 app:compactCalendarMultiEventIndicatorColor="#f7d420"
                 />
+
 
 
 
@@ -96,6 +97,10 @@
                 android:textAlignment="center"
                 android:onClick="OpenNewTask"
                 android:text="Добавить задачу" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="19dp"
+                app:srcCompat="@android:drawable/btn_star" />
 
 
 
