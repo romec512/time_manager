@@ -75,7 +75,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView7"
+                        android:id="@+id/start_time_mon"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -98,7 +98,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/end_time_mon"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -145,7 +145,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/start_time_tu"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -168,7 +168,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/end_time_tu"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -215,7 +215,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/start_time_wed"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -238,7 +238,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/end_time_wed"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -285,7 +285,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/start_time_th"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -308,7 +308,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView14"
+                        android:id="@+id/end_time_th"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -357,7 +357,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView17"
+                        android:id="@+id/start_time_fri"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -380,7 +380,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView16"
+                        android:id="@+id/end_time_fri"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -427,7 +427,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView19"
+                        android:id="@+id/start_time_sat"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -450,7 +450,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView18"
+                        android:id="@+id/end_time_sat"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -465,11 +465,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout5"
+                android:id="@+id/end_time_sun"
                 android:layout_width="348dp"
                 android:layout_height="62dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/halfr"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -499,7 +499,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/start_time_sun"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -544,12 +544,13 @@
         android:id="@+id/button2"
         android:layout_width="145dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:paddingTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/btn_new_task"
-        android:text="Далее"
         android:fontFamily="@font/rubik"
+        android:onClick="freeTimeSave"
+        android:paddingTop="8dp"
+        android:text="Далее"
         android:textColor="#ffffff"
         android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
