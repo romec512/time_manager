@@ -37,6 +37,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         taskCardViewHolder.tvComment.setText(cards.get(i).comment);
         int colorIndex = cards.get(i).rating - 1;
         taskCardViewHolder.tvStartDate.setTextColor(Color.parseColor(colors[colorIndex]));
+        taskCardViewHolder.tvEndDate.setTextColor(Color.parseColor(colors[colorIndex]));
     }
 
     @Override

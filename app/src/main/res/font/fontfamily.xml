@@ -6,13 +6,18 @@
         android:fontWeight="400"
         android:font="@font/roboto_mono" />
 
-    <font
-        android:fontStyle="italic"
-        android:fontWeight="400"
-        android:font="@font/roboto" />
 
     <font
         android:fontStyle="italic"
         android:fontWeight="400"
-        android:font="@font/rubik" />
+
+        android:font="@font/roboto_slab_regular" />
+
+
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="400"
+
+        android:font="@font/rubic_black" />
+
 </font-family>

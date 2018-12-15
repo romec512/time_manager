@@ -34,46 +34,71 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="115px"
-                android:gravity="center"
-                android:text="Ноябрь"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/strelka" />
+
+                <TextView
+                    android:id="@+id/monthName"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_slab_regular"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:text="Ноябрь"
+                    android:textSize="45dp" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="35dp"
+                    android:rotation="180"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/strelka" />
+
+
+            </LinearLayout>
+
+
+
+            <com.github.sundeepk.compactcalendarview.CompactCalendarView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/calendarView"
+                android:layout_width="fill_parent"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_height="300dp"
+                app:compactCalendarTargetHeight="300dp"
+                app:compactCalendarTextSize="16sp"
+                app:compactCalendarBackgroundColor="#ffffff"
+                app:compactCalendarTextColor="#000000"
+                app:compactCalendarCurrentSelectedDayBackgroundColor="#f04f54"
+                app:compactCalendarCurrentDayBackgroundColor="#f6903e"
+                app:compactCalendarMultiEventIndicatorColor="#f7d420"
                 />
 
 
-            <CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="323dp"
-                android:background="#ffffff"
-                tools:layout_editor_absoluteX="18dp"
-                tools:layout_editor_absoluteY="16dp" />
 
-            <Button
-                android:id="@+id/btnOpenNewTask"
+            <TextView
+                android:id="@+id/selected_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
-
                 android:layout_gravity="center"
+                android:fontFamily="@font/roboto_slab_regular"
+                android:textSize="23dp"
+                android:textAlignment="center"
                 android:onClick="OpenNewTask"
                 android:text="Добавить задачу" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="368dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5px"
-                android:background="#ffffff"
 
-                android:layout_gravity="center"
-                android:onClick="OnClick"
-                android:text="Посмотреть задачи"
-                tools:layout_editor_absoluteX="148dp"
-                tools:layout_editor_absoluteY="396dp" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"

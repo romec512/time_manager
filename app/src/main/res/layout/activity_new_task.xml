@@ -11,36 +11,41 @@
 
 
     <TextView
-
+        android:id="@+id/selected_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="115px"
         android:gravity="center"
         android:text="14 Ноября"
-        />
+        android:fontFamily="@font/roboto"/>
+
 
 
     <LinearLayout
         android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Чем вы будете заниматься?"
+            android:fontFamily="@font/roboto"
             android:textSize="20dp" />
 
         <EditText
             android:id="@+id/etQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:fontFamily="@font/roboto"
+            android:textSize="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
             android:text="Оцените время для выполнения:"
             android:textSize="20dp" />
 
@@ -51,48 +56,58 @@
 
             <EditText
                 android:id="@+id/etTime"
-                android:layout_width="263dp"
+                android:layout_width="174dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:fontFamily="@font/roboto"
                 android:ems="10"
+                android:textSize="20dp"
                 android:inputType="number" />
 
             <TextView
-                android:layout_width="73dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
                 android:layout_marginRight="10dp"
                 android:text="часов"
                 android:textSize="20sp" />
         </LinearLayout>
 
         <TextView
-            android:layout_width="361dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:fontFamily="@font/roboto"
             android:layout_marginRight="10dp"
             android:text="Оцените важность:"
             android:textSize="20sp" />
 
 
+        <SeekBar
+            android:id="@+id/rating2"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_height="30dp"
+            android:background="@drawable/gradient" />
+
         <RatingBar
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:progressBackgroundTint="@drawable/gradient"
             android:layout_gravity="center"
-            android:numStars="5"
-            android:stepSize="0.25" />
+            android:numStars="4"
+            android:stepSize="1" />
 
         <Button
             android:id="@+id/btnSave"
-            android:layout_width="384dp"
-            android:layout_height="wrap_content"
+            android:layout_width="171dp"
+            android:layout_height="52dp"
             android:layout_below="@+id/rating"
-
+            android:fontFamily="@font/roboto"
             android:layout_gravity="center"
             android:background="#ffffff"
             android:text="Далее"
+            android:textSize="15dp"
             android:translationZ="4dp" />
 
     </LinearLayout>
