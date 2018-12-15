@@ -56,9 +56,17 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        String question = taskComment.getText().toString();
-        int time = Integer.parseInt(taskRunTime.getText().toString());
-        int rating = ratingBar.getProgress();
+        String question = "";
+        int time = 0;
+        int rating = 1;
+        try {
+            question = taskComment.getText().toString();
+            time = Integer.parseInt(taskRunTime.getText().toString());
+            rating = ratingBar.getProgress();
+        } catch (Exception e){
+            Toast.makeText(this, "Вы неправильно ввели данные, проверьте их и попробуйте снова", Toast.LENGTH_SHORT).show();
+            return;
+        }
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
