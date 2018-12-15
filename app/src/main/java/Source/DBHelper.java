@@ -22,6 +22,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 "task_comment text," +
                 "task_priority integer" +
                 ")");
+        sqLiteDatabase.execSQL("create table free_time(id integer primary key autoincrement," +
+                "day_of_week integer," +
+                "time_start text," +
+                "time_stop text," +
+                "free_time_variant int" +
+                ")");
 
 
 

@@ -1,5 +1,6 @@
 package com.example.roman.myapplication;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,12 @@ public class MyGraphics extends AppCompatActivity implements RadialTimePickerDia
 
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-        tvMonFirst.setText(hourOfDay + ":" + minute);
+        tvMonFirst.setText(hourOfDay + ":" + (minute / 10) + "" + (minute % 10));
+    }
+
+    public void freeTimeSave(View v){
+       for(int id = R.id.textView1, count = 0; count < 5; count++ ){
+
+       }
     }
 }
