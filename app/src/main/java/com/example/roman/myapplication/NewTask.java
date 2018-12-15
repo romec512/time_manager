@@ -4,13 +4,16 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +28,7 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
     Button btnSave;
     EditText taskRunTime, taskComment;
-    RatingBar ratingBar;
+    SeekBar ratingBar;
     TextView selectedDay;
     DBHelper dbHelper;
 
@@ -38,7 +41,8 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
         taskComment = (EditText) findViewById(R.id.etQuestion);
         taskRunTime = (EditText) findViewById(R.id.etTime);
-        ratingBar = (RatingBar) findViewById(R.id.rating);
+        ratingBar = (SeekBar) findViewById(R.id.rating2);
+        ratingBar.setMax(4);
 
         btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
@@ -54,7 +58,7 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View view) {
         String question = taskComment.getText().toString();
         int time = Integer.parseInt(taskRunTime.getText().toString());
-        float rating = ratingBar.getRating();
+        int rating = ratingBar.getProgress();
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -64,7 +68,7 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
                 contentValues.put("task_comment", question);
                 contentValues.put("task_run_time", time);
                 contentValues.put("task_deadline", deadline);
-                contentValues.put("task_priority", (int)rating);
+                contentValues.put("task_priority", rating + 1);
 
                 database.insert("tasks", null, contentValues);
                 break;

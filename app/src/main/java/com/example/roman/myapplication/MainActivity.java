@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 day = dayFormat.format(firstDayOfNewMonth.getTime());
                 year = new SimpleDateFormat("yyyy").format(firstDayOfNewMonth.getTime());
                 //В поле выбранной даты устанавливаем выбранную дату
-                selectedDate.setText(day + " " + monthsWithPostfix[month]);
+//                selectedDate.setText(day + " " + monthsWithPostfix[month]);
                 AddTaskOnCalendar(compactCalendarView);
             }
         });
@@ -214,13 +214,14 @@ public class MainActivity extends AppCompatActivity {
         String [] args = new String[]{ fullDate };
         List<Event> cards = new ArrayList<>();
         Cursor cursor = db.query("tasks", null, "task_deadline LIKE '%-" + (month / 10)+ "" + (month % 10 +1) + "-%'", null
-                ,null, null, "task_id");
+                ,null, null, "task_priority DESC");
         if(cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
 
                     String _deadline = cursor.getString(cursor.getColumnIndex("task_deadline"));
                     String _comment = cursor.getString(cursor.getColumnIndex("task_comment"));
+                    int _rating = cursor.getInt(cursor.getColumnIndex("task_priority"));
                     DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                     Date deadlineDate = null;
                     try {
@@ -228,7 +229,16 @@ public class MainActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    cards.add(new Event(Color.GREEN, deadlineDate.getTime(), _comment));
+
+                    int color = Color.GREEN;
+                    switch (_rating){
+                        case 1: color = Color.parseColor("#f04f54"); break;
+                        case 2: color = Color.parseColor("#f6903e"); break;
+                        case 3: color = Color.parseColor("#f7d420"); break;
+                        case 4: color = Color.parseColor("#ede674"); break;
+                        case 5: color = Color.parseColor("#e1eec3"); break;
+                    }
+                    cards.add(new Event(color, deadlineDate.getTime(), _comment));
 
                 } while (cursor.moveToNext());
             }

@@ -17,7 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".TestActivity" />
-        <activity android:name=".db" />
         <activity android:name=".NewTask" />
         <activity android:name=".MyGraphics"></activity>
     </application>

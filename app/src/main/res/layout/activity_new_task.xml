@@ -89,15 +89,6 @@
             android:layout_height="30dp"
             android:background="@drawable/gradient" />
 
-        <RatingBar
-            android:id="@+id/rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:progressBackgroundTint="@drawable/gradient"
-            android:layout_gravity="center"
-            android:numStars="4"
-            android:stepSize="1" />
-
         <Button
             android:id="@+id/btnSave"
             android:layout_width="171dp"
