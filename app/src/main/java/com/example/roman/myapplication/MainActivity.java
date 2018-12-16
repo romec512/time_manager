@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         selectedDate = (TextView)findViewById(R.id.selected_date);
 
         ImageView icon = new ImageView(this);
-        icon.setImageResource(R.mipmap.ic_launcher_round);
+        icon.setImageResource(R.drawable.logo2);
         final FloatingActionButton fab = new FloatingActionButton.Builder(this).setContentView(icon).build();
 
         SubActionButton.Builder builder = new SubActionButton.Builder(this);
@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
         SubActionButton add = builder.setContentView(addIcon).build();
 
         ImageView playIcon = new ImageView(this);
-        playIcon.setImageResource(R.drawable.play_button);
+        playIcon.setImageResource(R.drawable.sett_button);
         SubActionButton play = builder.setContentView(playIcon).build();
 
         ImageView removeIcon = new ImageView(this);
-        removeIcon.setImageResource(R.drawable.pause_button);
+        removeIcon.setImageResource(R.drawable.play_button);
         SubActionButton remove = builder.setContentView(removeIcon).build();
 
         ImageView showIcon = new ImageView(this);
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     //Запрещаем прокрутку карточек(т.к. они уже размещаются в scrollview и нам не нужна двойная прокрутка)
                     rv.setNestedScrollingEnabled(false);
                     //Задаем ширину под все карточки
-                    rv.setMinimumHeight(320 * taskCardAdapter.getItemCount());
+                    rv.setMinimumHeight(408* taskCardAdapter.getItemCount());
                     rv.setAdapter(taskCardAdapter);
                 }
                 selectedDate.setText(day + " " + monthsWithPostfix[month]);
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                         case 2: color = Color.parseColor("#f6903e"); break;
                         case 3: color = Color.parseColor("#f7d420"); break;
                         case 4: color = Color.parseColor("#ede674"); break;
-                        case 5: color = Color.parseColor("#e1eec3"); break;
+                        case 5: color = Color.parseColor("#d0f0c0"); break;
                     }
                     cards.add(new Event(color, deadlineDate.getTime(), _comment));
 

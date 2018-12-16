@@ -12,7 +12,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/card_view_layout"
         android:layout_width="match_parent"
-        android:layout_height="104dp">
+        android:layout_height="wrap_content"
+        android:minHeight="104dp">
 
         <TextView
             android:id="@+id/start_date"
@@ -21,9 +22,9 @@
             android:layout_marginTop="12dp"
             android:backgroundTint="#ffffff"
             android:fontFamily="@font/rubik"
-            android:paddingLeft="3dp"
+            android:paddingLeft="5dp"
             android:text="TextView"
-            android:textSize="18dp"
+            android:textSize="22dp"
             card_view:layout_constraintEnd_toStartOf="@+id/comment"
             card_view:layout_constraintHorizontal_bias="0.695"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -32,33 +33,30 @@
         <TextView
             android:id="@+id/stop_date"
             android:layout_width="94dp"
-            android:layout_height="41dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="31dp"
             android:backgroundTint="#ffffff"
             android:fontFamily="@font/rubik"
-            android:paddingLeft="3dp"
+            android:paddingLeft="5dp"
             android:text="TextView"
-            android:textSize="18dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="22dp"
             card_view:layout_constraintEnd_toStartOf="@+id/comment"
-            card_view:layout_constraintHorizontal_bias="0.695"
+            card_view:layout_constraintHorizontal_bias="0.709"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/start_date"
-            card_view:layout_constraintVertical_bias="1.0" />
+            card_view:layout_constraintTop_toBottomOf="@+id/start_date" />
 
         <TextView
             android:id="@+id/comment"
-            android:layout_width="251dp"
-            android:layout_height="73dp"
+            android:layout_width="242dp"
+            android:layout_height="69dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="13dp"
-            android:paddingLeft="20dp"
             android:bufferType="normal"
             android:fontFamily="@font/roboto_mono"
+
+            android:paddingLeft="10dp"
             android:text="TextView"
             android:textColor="#000000"
-            android:textSize="20dp"
+            android:textSize="18dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.879"
@@ -69,15 +67,45 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="401dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="32dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.32"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/comment"
-            card_view:layout_constraintVertical_bias="0.375"
+            card_view:layout_constraintTop_toBottomOf="parent"
             card_view:srcCompat="@drawable/greyline" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_mono"
+            android:text="День дедлайна:"
+            android:textSize="9dp"
+            card_view:layout_constraintBottom_toTopOf="@+id/imageView"
+            card_view:layout_constraintStart_toEndOf="@+id/stop_date"
+            card_view:layout_constraintTop_toBottomOf="@+id/comment"
+            card_view:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_mono"
+            android:text="25-02-2018"
+            android:textSize="9dp"
+            card_view:layout_constraintBottom_toTopOf="@+id/imageView"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.176"
+            card_view:layout_constraintStart_toEndOf="@+id/textView22"
+            card_view:layout_constraintTop_toBottomOf="@+id/comment"
+            card_view:layout_constraintVertical_bias="0.0" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

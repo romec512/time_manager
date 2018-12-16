@@ -15,8 +15,7 @@ import java.util.List;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
     List<TaskCard> cards;
-
-    public String [] colors= {"#e1eec3","#ede674","#f7d420","#f6903e","#f04f54"};
+    public String [] colors= {"#d0f0c0","#ede674","#f7d420","#f6903e","#f04f54"};
     public TaskCardAdapter(List<TaskCard> _cards){
         cards = _cards;
     }
