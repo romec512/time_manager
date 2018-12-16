@@ -14,9 +14,9 @@
         android:id="@+id/selected_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="115px"
+        android:textSize="90px"
         android:gravity="center"
-        android:text="14 Ноября"
+        android:text="14 ноября"
         android:fontFamily="@font/roboto"/>
 
 
@@ -25,6 +25,7 @@
         android:background="#ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:paddingLeft="10dp"
         android:orientation="vertical">
 

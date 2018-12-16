@@ -42,7 +42,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     app:srcCompat="@drawable/strelka" />
 
                 <TextView
@@ -53,14 +53,14 @@
                     android:gravity="center"
                     android:paddingBottom="5dp"
                     android:textColor="#747579"
-                    android:text="Сентябрь 2018"
-                    android:textSize="36dp" />
+                    android:text="Сентябрь"
+                    android:textSize="80px" />
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="35dp"
                     android:rotation="180"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     app:srcCompat="@drawable/strelka" />
 
 
@@ -91,7 +91,7 @@
                 android:id="@+id/selected_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="13dp"
                 android:background="#eef0f0"
                 android:layout_gravity="center"
                 android:fontFamily="@font/roboto_slab_regular"
