@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     //Запрещаем прокрутку карточек(т.к. они уже размещаются в scrollview и нам не нужна двойная прокрутка)
                     rv.setNestedScrollingEnabled(false);
                     //Задаем ширину под все карточки
-                    rv.setMinimumHeight(408* taskCardAdapter.getItemCount());
+                    rv.setMinimumHeight(380* taskCardAdapter.getItemCount());
                     rv.setAdapter(taskCardAdapter);
                 }
                 selectedDate.setText(day + " " + monthsWithPostfix[month]);

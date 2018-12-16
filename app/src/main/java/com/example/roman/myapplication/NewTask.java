@@ -95,7 +95,7 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
                 database.insert("tasks_distribution", null, cv);
             }
         } else {
-            Toast.makeText(this, "К сожалению в вашем расписании не хватает " + tm.impossibleTime +
+            Toast.makeText(this, "К сожалению, в вашем расписании не хватает " + tm.impossibleTime +
                     " часов для добавления этой задачи", Toast.LENGTH_SHORT).show();
             return ;
         }

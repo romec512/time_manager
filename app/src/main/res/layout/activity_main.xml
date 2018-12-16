@@ -12,7 +12,7 @@
     <ScrollView
         android:id="@+id/ScrollView"
         android:layout_width="351dp"
-        android:layout_height="558dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="13dp"
                     app:srcCompat="@drawable/strelka" />
 
                 <TextView
@@ -52,15 +52,16 @@
                     android:fontFamily="@font/roboto_slab_regular"
                     android:gravity="center"
                     android:paddingBottom="5dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="#747579"
-                    android:text="Сентябрь"
-                    android:textSize="80px" />
+                    android:text="Сентябрь 2019"
+                    android:textSize="85px" />
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="35dp"
                     android:rotation="180"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="13dp"
                     app:srcCompat="@drawable/strelka" />
 
 
@@ -74,6 +75,7 @@
                 android:layout_width="fill_parent"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
+                android:layout_marginTop="12dp"
                 android:layout_height="300dp"
                 app:compactCalendarTargetHeight="300dp"
                 app:compactCalendarTextSize="17sp"
