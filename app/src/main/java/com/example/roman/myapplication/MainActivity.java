@@ -232,17 +232,28 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    int color = Color.GREEN;
-                    switch (_rating){
-                        case 1: color = Color.parseColor("#f04f54"); break;
-                        case 2: color = Color.parseColor("#f6903e"); break;
-                        case 3: color = Color.parseColor("#f7d420"); break;
-                        case 4: color = Color.parseColor("#ede674"); break;
-                        case 5: color = Color.parseColor("#d0f0c0"); break;
-                    }
+                     int color = Color.parseColor("#f04f54");
                     cards.add(new Event(color, deadlineDate.getTime(), _comment));
 
                 } while (cursor.moveToNext());
+            }
+            Cursor tasksDistr = db.query("tasks_distribution", null, "task_date LIKE '%-" + (month / 10) + "" + (month % 10 + 1) + "-%'", null,
+                    null,null, null);
+            if(tasksDistr != null){
+                if(tasksDistr.moveToFirst()){
+                    do {
+                        String taskDistrDateStr = tasksDistr.getString(tasksDistr.getColumnIndex("task_date"));
+                        int color = Color.parseColor("#d0f0c0");
+                        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                        Date taskDistrDate = null;
+                        try {
+                            taskDistrDate = format.parse(taskDistrDateStr);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        cards.add(new Event(color, taskDistrDate.getTime(), ""));
+                    } while (tasksDistr.moveToNext());
+                }
             }
             compactCalendarView.addEvents(cards);
         }

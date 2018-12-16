@@ -37,6 +37,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         int colorIndex = cards.get(i).rating - 1;
         taskCardViewHolder.tvStartDate.setTextColor(Color.parseColor(colors[colorIndex]));
         taskCardViewHolder.tvEndDate.setTextColor(Color.parseColor(colors[colorIndex]));
+        taskCardViewHolder.tvDeadline.setText(cards.get(i).deadline);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
 
     public static class TaskCardViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView tvStartDate, tvEndDate, tvComment;
+        TextView tvStartDate, tvEndDate, tvComment, tvDeadline;
 
         public TaskCardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +60,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             tvStartDate = (TextView)itemView.findViewById(R.id.start_date);
             tvEndDate = (TextView)itemView.findViewById(R.id.stop_date);
             tvComment = (TextView)itemView.findViewById(R.id.comment);
+            tvDeadline = (TextView)itemView.findViewById(R.id.tvDeadline);
         }
     }
 }
