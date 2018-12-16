@@ -20,9 +20,16 @@ import android.widget.Toast;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import Source.DBHelper;
+import Source.TimeManager;
+import Source.TimeManagerRec;
 
 public class NewTask extends AppCompatActivity implements View.OnClickListener{
 
@@ -67,19 +74,30 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
             Toast.makeText(this, "Вы неправильно ввели данные, проверьте их и попробуйте снова", Toast.LENGTH_SHORT).show();
             return;
         }
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-
-        switch (view.getId()){
-            case R.id.btnSave:
-                contentValues.put("task_comment", question);
-                contentValues.put("task_run_time", time);
-                contentValues.put("task_deadline", deadline);
-                contentValues.put("task_priority", rating + 1);
-
-                database.insert("tasks", null, contentValues);
-                break;
+        TimeManagerRec tm = new TimeManagerRec(dbHelper, deadline);
+        Date today = new Date();
+        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+        tm.timing(time, format1.format(today));
+        if(tm.isPossible) {
+            SQLiteDatabase database = dbHelper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("task_comment", question);
+            contentValues.put("task_run_time", time);
+            contentValues.put("task_deadline", deadline);
+            contentValues.put("task_priority", rating + 1);
+            long rowId = database.insert("tasks", null, contentValues);
+            for(String[] task : tm.timingResults){
+                ContentValues cv = new ContentValues();
+                cv.put("task_id", rowId);
+                cv.put("start_time", task[0]);
+                cv.put("stop_time", task[1]);
+                cv.put("task_date", task[2]);
+                database.insert("tasks_distribution", null, cv);
+            }
+        } else {
+            Toast.makeText(this, "К сожалению в вашем расписании не хватает " + tm.impossibleTime +
+                    " часов для добавления этой задачи", Toast.LENGTH_SHORT).show();
+            return ;
         }
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("new_task_created", true);

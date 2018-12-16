@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 .attachTo(fab)
                 .build();
 
-        //
+        //обработчик кнопки добавить
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Сейчас эта функция заблокирована, она будет добавлена в следующем обновлении!", Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(MainActivity.this, MyGraphics.class);
                startActivity(intent);
                 fam.close(true);
@@ -127,17 +126,23 @@ public class MainActivity extends AppCompatActivity {
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 String [] args = new String[]{ fullDate };
                 List<TaskCard> cards = new ArrayList<>();
-                Cursor cursor = db.query("tasks", null, "task_deadline = ?", args
-                        ,null, null, "task_id");
+                Cursor cursor = db.query("tasks_distribution", null, "task_date = ?", args
+                        ,null, null, "start_time");
                 if(cursor != null) {
                     if (cursor.moveToFirst()) {
                         String str;
                         do {
+                            int taskId = cursor.getInt(cursor.getColumnIndex("task_id"));
+                            String startTime = cursor.getString(cursor.getColumnIndex("start_time"));
+                            String stopTime = cursor.getString(cursor.getColumnIndex("stop_time"));
+                            Cursor task = db.query("tasks", null, "task_id = " + taskId, null, null, null, null);
+                            task.moveToFirst();
                             cards.add(new TaskCard(
-                                    cursor.getString(cursor.getColumnIndex("task_deadline")),
-                                    cursor.getString(cursor.getColumnIndex("task_run_time")).toString(),
-                                    cursor.getString(cursor.getColumnIndex("task_comment")),
-                                    parseInt( cursor.getString(cursor.getColumnIndex("task_priority")))
+                                    startTime,
+                                    stopTime,
+                                    task.getString(task.getColumnIndex("task_comment")),
+                                    task.getString(task.getColumnIndex("task_deadline")),
+                                    parseInt( task.getString(task.getColumnIndex("task_priority")))
                             ));
                         } while (cursor.moveToNext());
                     }
@@ -187,9 +192,6 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dayFormat = new SimpleDateFormat("d");
                 day = dayFormat.format(firstDayOfNewMonth.getTime());
                 year = new SimpleDateFormat("yyyy").format(firstDayOfNewMonth.getTime());
-                //В поле выбранной даты устанавливаем выбранную дату
-//                selectedDate.setText(day + " " + monthsWithPostfix[month]);
-                AddTaskOnCalendar(compactCalendarView);
             }
         });
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);

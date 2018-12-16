@@ -465,7 +465,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/end_time_sun"
+                android:id="@+id/LinearLayout3"
                 android:layout_width="348dp"
                 android:layout_height="62dp"
                 android:layout_marginTop="10dp"
@@ -522,7 +522,7 @@
                         android:textSize="18dp" />
 
                     <TextView
-                        android:id="@+id/textView20"
+                        android:id="@+id/end_time_sun"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

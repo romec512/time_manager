@@ -27,11 +27,11 @@ import static java.lang.Integer.parseInt;
 
 public class MyGraphics extends AppCompatActivity implements RadialTimePickerDialogFragment.OnTimeSetListener{
     TextView tvMonFirst;
-    int [] start_times = new int [] {R.id.start_time_mon, R.id.start_time_tu, R.id.start_time_tu,
+    int [] start_times = new int [] {R.id.start_time_mon, R.id.start_time_tu,
             R.id.start_time_wed, R.id.start_time_th, R.id.start_time_fri, R.id.start_time_sat, R.id.start_time_sun};
 
 
-    int [] end_times = new int [] {R.id.end_time_mon, R.id.end_time_tu, R.id.end_time_tu,
+    int [] end_times = new int [] {R.id.end_time_mon, R.id.end_time_tu,
             R.id.end_time_wed, R.id.end_time_th, R.id.end_time_fri, R.id.end_time_sat, R.id.end_time_sun};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class MyGraphics extends AppCompatActivity implements RadialTimePickerDia
                     tv = (TextView) findViewById(end_times[i]);
                     tv.setText(cursor.getString(cursor.getColumnIndex("time_stop")));
                     i++;
-                } while (cursor.moveToNext());
+                } while (cursor.moveToNext() && i < 7);
             }
         }
     }
