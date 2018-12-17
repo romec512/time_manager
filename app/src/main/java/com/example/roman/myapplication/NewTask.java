@@ -70,6 +70,9 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
             question = taskComment.getText().toString();
             time = Integer.parseInt(taskRunTime.getText().toString());
             rating = ratingBar.getProgress();
+            if(time <= 0){
+                throw new Exception();
+            }
         } catch (Exception e){
             Toast.makeText(this, "Вы неправильно ввели данные, проверьте их и попробуйте снова", Toast.LENGTH_SHORT).show();
             return;

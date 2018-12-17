@@ -258,4 +258,9 @@ public class MainActivity extends AppCompatActivity {
             compactCalendarView.addEvents(cards);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }
