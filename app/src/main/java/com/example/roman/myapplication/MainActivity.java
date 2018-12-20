@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import Source.CardVIewHelper;
 import Source.DBHelper;
 import Source.TaskCard;
 import Source.TaskCardAdapter;
@@ -38,7 +40,8 @@ import Source.TaskCardAdapter;
 import static java.lang.Integer.parseInt;
 
 public class MainActivity extends AppCompatActivity {
-    private String fullDate, day;
+    public String fullDate;
+    private String day;
     int month;
     String year;
     private TextView headerSelectedMonthName, selectedDate;
@@ -120,47 +123,12 @@ public class MainActivity extends AppCompatActivity {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout sv = (LinearLayout)findViewById(R.id.Scroll_layout);
-                RecyclerView rv = (RecyclerView)findViewById(R.id.recyclerView);
-                DBHelper dbHelper = new DBHelper(  MainActivity.this);
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                String [] args = new String[]{ fullDate };
-                List<TaskCard> cards = new ArrayList<>();
-                Cursor cursor = db.query("tasks_distribution", null, "task_date = ?", args
-                        ,null, null, "start_time");
-                if(cursor != null) {
-                    if (cursor.moveToFirst()) {
-                        String str;
-                        do {
-                            int taskId = cursor.getInt(cursor.getColumnIndex("task_id"));
-                            String startTime = cursor.getString(cursor.getColumnIndex("start_time"));
-                            String stopTime = cursor.getString(cursor.getColumnIndex("stop_time"));
-                            Cursor task = db.query("tasks", null, "task_id = " + taskId, null, null, null, null);
-                            task.moveToFirst();
-                            cards.add(new TaskCard(
-                                    startTime,
-                                    stopTime,
-                                    task.getString(task.getColumnIndex("task_comment")),
-                                    task.getString(task.getColumnIndex("task_deadline")),
-                                    parseInt( task.getString(task.getColumnIndex("task_priority")))
-                            ));
-                        } while (cursor.moveToNext());
-                    }
-                    TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards);
-                    rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-                    //Устанавливаем фиксированный размер
-                    rv.setHasFixedSize(true);
-                    //Запрещаем прокрутку карточек(т.к. они уже размещаются в scrollview и нам не нужна двойная прокрутка)
-                    rv.setNestedScrollingEnabled(false);
-                    //Задаем ширину под все карточки
-                    rv.setMinimumHeight(380* taskCardAdapter.getItemCount());
-                    rv.setAdapter(taskCardAdapter);
-                }
+                CardVIewHelper cardVIewHelper = new CardVIewHelper();
+                cardVIewHelper.drawCards(fullDate, MainActivity.this, findViewById(R.id.constraintLayout));
                 selectedDate.setText(day + " " + monthsWithPostfix[month]);
                 fam.close(true);
             }
         });
-
 
         DateFormat dateFormat = new SimpleDateFormat("d-MM-YYYY");
         Date date = new Date();
@@ -209,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Метод добавления точек(указатель задачи) на календарь
-    private void AddTaskOnCalendar(CompactCalendarView compactCalendarView){
+    public void AddTaskOnCalendar(CompactCalendarView compactCalendarView){
         //Добавляем отметку дедлайна на календарь
         DBHelper dbHelper = new DBHelper(  MainActivity.this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
