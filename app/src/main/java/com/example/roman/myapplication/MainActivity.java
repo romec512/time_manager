@@ -130,12 +130,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        DateFormat dateFormat = new SimpleDateFormat("d-MM-YYYY");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         Date date = new Date();
         headerSelectedMonthName.setText(months[date.getMonth()] + " " + (date.getYear() + 1900));
         year = (date.getYear() + 1900) + "";
         month = date.getMonth();
-        DateFormat dayFormat = new SimpleDateFormat("d");
+        DateFormat dayFormat = new SimpleDateFormat("dd");
         day = dayFormat.format(date.getTime());
         fullDate = day + "-" + (month+1) + "-" + year;
 
@@ -145,9 +145,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
-                DateFormat dateFormat = new SimpleDateFormat("d-MM-YYYY");
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
                 fullDate = dateFormat.format(dateClicked.getTime());
-                DateFormat dayFormat = new SimpleDateFormat("d");
+                DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(dateClicked.getTime());
             }
 
@@ -155,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
             public void onMonthScroll(Date firstDayOfNewMonth) {
                 headerSelectedMonthName.setText(months[firstDayOfNewMonth.getMonth()] + " "+(firstDayOfNewMonth.getYear() + 1900));
                 month = firstDayOfNewMonth.getMonth();
-                DateFormat dateFormat = new SimpleDateFormat("d-MM-YYYY");
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
                 fullDate = dateFormat.format(firstDayOfNewMonth.getTime());
-                DateFormat dayFormat = new SimpleDateFormat("d");
+                DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(firstDayOfNewMonth.getTime());
                 year = new SimpleDateFormat("yyyy").format(firstDayOfNewMonth.getTime());
             }

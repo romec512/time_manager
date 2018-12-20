@@ -93,7 +93,6 @@
                 android:layout_marginTop="13dp"
                 android:background="#eef0f0"
                 android:fontFamily="@font/roboto_slab_regular"
-                android:onClick="OpenNewTask"
                 android:text="Добавить задачу"
                 android:textAlignment="center"
                 android:textColor="#747579"

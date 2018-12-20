@@ -107,7 +107,7 @@ public class TimeManagerRec {
                         }
                         timingResults.add(new String[]{
                            start_time,
-                           (endTime / 10) + "" + (endTime % 10) + "-" + split[1],
+                           (endTime / 10) + "" + (endTime % 10) + ":" + split[1],
                            todayStr
                         });
                     } else {
@@ -158,11 +158,19 @@ public class TimeManagerRec {
             }
         }
         String [] splitDates = todayStr.split("-");
-        int dayInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        if(dayInMonth == 0){
-            dayInMonth++;
-        }
+        int dayInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH) + 1;
         int day = (Integer.parseInt(splitDates[0]) + 1) % dayInMonth;
+        int month = (Integer.parseInt(splitDates[1]));
+        if(day == 0){
+            day = 1;
+            month = (Integer.parseInt(splitDates[1]) + 1) % 13;
+        }
+        if(month == 0){
+            splitDates[1] = "01";
+            splitDates[2] = Integer.parseInt(splitDates[2]) + 1 + "";
+        } else {
+            splitDates[1] = month / 10 + "" + month % 10;
+        }
         String nextDate = (day / 10) + "" + (day % 10) + "-" + splitDates[1] + "-" + splitDates[2];
         timing(hours, nextDate);
     }
