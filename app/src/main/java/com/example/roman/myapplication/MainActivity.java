@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(firstDayOfNewMonth.getTime());
                 year = new SimpleDateFormat("yyyy").format(firstDayOfNewMonth.getTime());
+                compactCalendarView.removeAllEvents();
+                AddTaskOnCalendar(compactCalendarView);
             }
         });
         compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
