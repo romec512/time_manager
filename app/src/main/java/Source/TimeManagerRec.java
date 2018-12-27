@@ -60,9 +60,9 @@ public class TimeManagerRec {
                 int startMinutes, endHour, endMinutes;
                 startFreeHour = Integer.parseInt(freeSplit[0]);
                 startMinutes = Integer.parseInt(freeSplit[1]);
-                freeSplit = stopFreeTime.split(":");
-                endHour = Integer.parseInt(freeSplit[0]);
-                endMinutes = Integer.parseInt(freeSplit[1]);
+                String[] stopSplit = stopFreeTime.split(":");
+                endHour = Integer.parseInt(stopSplit[0]);
+                endMinutes = Integer.parseInt(stopSplit[1]);
                 freeHours = endHour - startFreeHour;
                 if(startMinutes > endMinutes){
                     freeHours--;
