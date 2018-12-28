@@ -99,8 +99,8 @@ public class TimeManagerRec {
                     int endTime;
                     if(freeHours >= 3){
                         if(hours < 3){
-                            hours = 0;
                             endTime = (startHour + hours) % 24;
+                            hours = 0;
                         } else {
                             hours -= 3;
                             endTime = (startHour + 3) % 24;
@@ -112,8 +112,8 @@ public class TimeManagerRec {
                         });
                     } else {
                         if(hours < freeHours){
-                            hours = 0;
                             endTime = (startHour + hours) % 24;
+                            hours = 0;
                         } else {
                             hours -= freeHours;
                             endTime = (startHour + freeHours) % 24;
