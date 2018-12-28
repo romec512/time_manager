@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         SubActionButton view = builder.setContentView(showIcon).build();
 
 
-
         final FloatingActionMenu fam = new FloatingActionMenu.Builder(this)
                 .addSubActionView(remove)
                 .addSubActionView(play)

@@ -18,7 +18,7 @@
     <LinearLayout
         android:id="@+id/bottom_wrapper"
         android:layout_width="87dp"
-        android:layout_height="145dp"
+        android:layout_height="134dp"
         android:layout_gravity="right"
         android:background="#ffffff"
         android:weightSum="1"
@@ -32,8 +32,7 @@
                 android:id="@+id/buttonDelete"
                 android:layout_width="87dp"
                 android:layout_height="106dp"
-                android:background="@color/bpRed"
-                android:text="Удалить"
+                android:background="@drawable/trash_alt_background"
                 android:topRightRadius="5dp"
                 card_view:layout_constraintHeight_min="32dp"
                 card_view:layout_constraintStart_toStartOf="parent"
@@ -42,10 +41,10 @@
             <ImageView
                 android:layout_width="117dp"
                 android:layout_height="28dp"
+                android:background="@drawable/greyline"
                 card_view:layout_constraintTop_toBottomOf="@id/buttonDelete"
                 card_view:layout_constraintVertical_bias="1.0"
-                card_view:srcCompat="@drawable/greyline"
-                android:background="@drawable/greyline"/>
+                card_view:srcCompat="@drawable/greyline" />
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
@@ -55,7 +54,7 @@
         <LinearLayout
             android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#ffffff">
             <!--What you want to show in SurfaceView-->
             <android.support.constraint.ConstraintLayout

@@ -1,5 +1,6 @@
 package Source;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.annotation.MainThread;
@@ -24,6 +25,8 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
     List<TaskCard> cards;
@@ -98,7 +101,6 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                 @Override
                 public void onOpen(SwipeLayout layout) {
                     //when the BottomView totally show.
-                    Toast.makeText(itemView.getContext(), "" + taskId, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -115,17 +117,32 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             buttonDelete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    DBHelper dbHelper = new DBHelper(itemView.getContext());
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                    db.delete("tasks", "task_id = " + taskId, null);
-                    db.delete("tasks_distribution", "task_id = " + taskId, null);
-                    CardVIewHelper cardVIewHelper = new CardVIewHelper();
-                    MainActivity activity = (MainActivity)itemView.getContext();
-                    cardVIewHelper.drawCards(activity.fullDate, itemView.getContext(), activity.findViewById(R.id.constraintLayout));
-                    final CompactCalendarView compactCalendarView = (CompactCalendarView)activity.findViewById(R.id.calendarView);
-                    compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
-                    compactCalendarView.removeAllEvents();
-                    activity.AddTaskOnCalendar(compactCalendarView);
+                    SweetAlertDialog newSwaDialog = new SweetAlertDialog(itemView.getContext());
+                    new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Подтвердите действие")
+                            .setContentText("Вы действительно хотите удалить эту задачу?")
+                            .setCancelText("Да")
+                            .setNeutralText("Нет")
+                            .hideConfirmButton()
+                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    DBHelper dbHelper = new DBHelper(itemView.getContext());
+                                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                                    db.delete("tasks", "task_id = " + taskId, null);
+                                    db.delete("tasks_distribution", "task_id = " + taskId, null);
+                                    CardVIewHelper cardVIewHelper = new CardVIewHelper();
+                                    MainActivity activity = (MainActivity) itemView.getContext();
+                                    cardVIewHelper.drawCards(activity.fullDate, itemView.getContext(), activity.findViewById(R.id.constraintLayout));
+                                    final CompactCalendarView compactCalendarView = (CompactCalendarView) activity.findViewById(R.id.calendarView);
+                                    compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
+                                    compactCalendarView.removeAllEvents();
+                                    activity.AddTaskOnCalendar(compactCalendarView);
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    Toast.makeText(activity, "Задача успешно удалена", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .show();
                 }
             });
         }
