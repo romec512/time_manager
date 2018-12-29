@@ -7,12 +7,14 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.text.Selection;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +72,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         CardView cv;
         TextView tvStartDate, tvEndDate, tvComment, tvDeadline;
         SwipeLayout swipeLayout;
-        Button buttonDelete;
+        Button buttonDelete, buttonMove;
         int taskId;
         public TaskCardViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -117,7 +119,6 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
             buttonDelete.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    SweetAlertDialog newSwaDialog = new SweetAlertDialog(itemView.getContext());
                     new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.WARNING_TYPE)
                             .setTitleText("Подтвердите действие")
                             .setContentText("Вы действительно хотите удалить эту задачу?")
@@ -140,6 +141,26 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                                     activity.AddTaskOnCalendar(compactCalendarView);
                                     sweetAlertDialog.dismissWithAnimation();
                                     Toast.makeText(activity, "Задача успешно удалена", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .show();
+                }
+            });
+
+            buttonMove = (Button)itemView.findViewById(R.id.buttonMove);
+            buttonMove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final EditText editText = new EditText(itemView.getContext());
+                    editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    new SweetAlertDialog(itemView.getContext(), SweetAlertDialog.NORMAL_TYPE)
+                            .setTitleText("На сколько часов вы не успеваете приступить к выполнению задачи?")
+                            .setCustomView(editText)
+                            .setConfirmText("ОК")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    int hours = Integer.parseInt(editText.getText().toString());
                                 }
                             })
                             .show();

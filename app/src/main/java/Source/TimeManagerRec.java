@@ -20,12 +20,20 @@ public class TimeManagerRec {
     public DBHelper dbHelper;
     private int [] daysOfWeeks = {6,0,1,2,3,4,5};
     public int impossibleTime;
+    private String _today;
 
     public TimeManagerRec(DBHelper _dbHelper, String _deadline){
         timingResults = new ArrayList<>();
         dbHelper = _dbHelper;
         deadline = _deadline;
     }
+
+    public TimeManagerRec(){
+        Date todayDate = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
+        _today = format.format(todayDate);
+    }
+
     public void timing(int hours, String date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String todayStr = date;
@@ -173,5 +181,9 @@ public class TimeManagerRec {
         }
         String nextDate = (day / 10) + "" + (day % 10) + "-" + splitDates[1] + "-" + splitDates[2];
         timing(hours, nextDate);
+    }
+
+    public void moveTaskTime(int offset){
+
     }
 }
