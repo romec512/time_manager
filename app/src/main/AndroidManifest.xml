@@ -11,7 +11,12 @@
         android:roundIcon="@mipmap/ic_first_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name="com.orm.SugarApp"
         >
+        <meta-data android:name="DATABASE" android:value="time_manager_db" />
+        <meta-data android:name="VERSION" android:value="3" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.example.roman" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

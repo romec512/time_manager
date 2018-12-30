@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import DataBase.Task;
 import Source.DBHelper;
 import Source.TimeManager;
 import Source.TimeManagerRec;
@@ -82,21 +83,9 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
         SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
         tm.timing(time, format1.format(today));
         if(tm.isPossible) {
-            SQLiteDatabase database = dbHelper.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("task_comment", question);
-            contentValues.put("task_run_time", time);
-            contentValues.put("task_deadline", deadline);
-            contentValues.put("task_priority", rating + 1);
-            long rowId = database.insert("tasks", null, contentValues);
-            for(String[] task : tm.timingResults){
-                ContentValues cv = new ContentValues();
-                cv.put("task_id", rowId);
-                cv.put("start_time", task[0]);
-                cv.put("stop_time", task[1]);
-                cv.put("task_date", task[2]);
-                database.insert("tasks_distribution", null, cv);
-            }
+            Task task = new Task(deadline, question, time, rating + 1);
+            task.save();
+            tm.distributeTask(task.getId());
         } else {
             Toast.makeText(this, "К сожалению, в вашем расписании не хватает " + tm.impossibleTime +
                     " часов для добавления этой задачи", Toast.LENGTH_SHORT).show();

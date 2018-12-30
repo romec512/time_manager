@@ -3,6 +3,8 @@ package Source;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.orm.SugarRecord;
+
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import DataBase.Task;
+import DataBase.TaskDistribution;
 
 public class TimeManagerRec {
     public String deadline;
@@ -183,7 +188,18 @@ public class TimeManagerRec {
         timing(hours, nextDate);
     }
 
+
+     //метод сдвига времени, если пользователь не успевает приступить к выполнению задачи
     public void moveTaskTime(int offset){
 
+    }
+
+    //метод сохранения в бд распределенного времени
+    public void distributeTask(long taskId){
+        Task task = SugarRecord.findById(Task.class, taskId);
+        for(String[] taskInfo : timingResults){
+            TaskDistribution distribution = new TaskDistribution(task, taskInfo[0], taskInfo[1],taskInfo[2]);
+            distribution.save();
+        }
     }
 }

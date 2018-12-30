@@ -14,6 +14,8 @@ import com.example.roman.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import DataBase.TaskDistribution;
+
 import static java.lang.Integer.parseInt;
 
 public class CardVIewHelper {
@@ -24,29 +26,11 @@ public class CardVIewHelper {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String [] args = new String[]{ fullDate };
         List<TaskCard> cards = new ArrayList<>();
-        Cursor cursor = db.query("tasks_distribution", null, "task_date = ?", args
-                ,null, null, "start_time");
-        if(cursor != null) {
-            if (cursor.moveToFirst()) {
-                String str;
-                do {
-                    int taskId = cursor.getInt(cursor.getColumnIndex("task_id"));
-                    String startTime = cursor.getString(cursor.getColumnIndex("start_time"));
-                    String stopTime = cursor.getString(cursor.getColumnIndex("stop_time"));
-                    Cursor task = db.query("tasks", null, "task_id = " + taskId, null, null, null, null);
-                    task.moveToFirst();
-                    TaskCard card = new TaskCard(
-                            startTime,
-                            stopTime,
-                            task.getString(task.getColumnIndex("task_comment")),
-                            task.getString(task.getColumnIndex("task_deadline")),
-                            parseInt( task.getString(task.getColumnIndex("task_priority"))),
-                            task.getInt(task.getColumnIndex("task_id")),
-                            context
-                    );
-                    cards.add(card);
-                } while (cursor.moveToNext());
-            }
+        List<TaskDistribution> distributions = TaskDistribution.find(TaskDistribution.class, "task_date = ?", args, null, "start_time",null );
+        for (TaskDistribution distribution: distributions) {
+            cards.add(new TaskCard(distribution.startTime, distribution.stopTime, distribution.task.comment,
+                    distribution.task.deadline, distribution.task.priority, distribution.task.getId().intValue(), context));
+        }
             TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards);
             rv.setLayoutManager(new LinearLayoutManager(context));
             //Устанавливаем фиксированный размер
@@ -56,6 +40,5 @@ public class CardVIewHelper {
             //Задаем ширину под все карточки
             rv.setMinimumHeight(380 * taskCardAdapter.getItemCount());
             rv.setAdapter(taskCardAdapter);
-        }
     }
 }

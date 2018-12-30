@@ -144,10 +144,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendarView.getEvents(dateClicked);
-                DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-                fullDate = dateFormat.format(dateClicked.getTime());
+                DateFormat dateFormat = new SimpleDateFormat("MM");
+                String month = dateFormat.format(dateClicked);
                 DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(dateClicked.getTime());
+                fullDate = day + "-" + month + "-" + (1900 + dateClicked.getYear());
             }
 
             @Override

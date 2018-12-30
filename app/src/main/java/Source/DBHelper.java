@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "time_manager_db";
 
     public DBHelper(Context context) {
@@ -16,19 +16,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table  tasks(task_id integer primary key autoincrement," +
+        sqLiteDatabase.execSQL("create table  tasks(ID integer primary key autoincrement," +
                 "task_deadline text," +
                 "task_run_time integer," +
                 "task_comment text," +
                 "task_priority integer" +
                 ")");
-        sqLiteDatabase.execSQL("create table free_time(id integer primary key autoincrement," +
+        sqLiteDatabase.execSQL("create table free_time(ID integer primary key autoincrement," +
                 "day_of_week integer," +
                 "time_start text," +
                 "time_stop text," +
                 "free_time_variant int" +
                 ")");
-        sqLiteDatabase.execSQL("create table tasks_distribution(id integer primary key autoincrement," +
+        sqLiteDatabase.execSQL("create table tasks_distribution(ID integer primary key autoincrement," +
                 "task_id int," +
                 "start_time text," +
                 "stop_time text," +

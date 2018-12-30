@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import DataBase.Task;
+import DataBase.TaskDistribution;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
@@ -128,10 +130,8 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                             .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    DBHelper dbHelper = new DBHelper(itemView.getContext());
-                                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                                    db.delete("tasks", "task_id = " + taskId, null);
-                                    db.delete("tasks_distribution", "task_id = " + taskId, null);
+                                    Task.deleteAll(Task.class, "ID = " + taskId, null);
+                                    TaskDistribution.deleteAll(TaskDistribution.class, "task_id = " + taskId, null);
                                     CardVIewHelper cardVIewHelper = new CardVIewHelper();
                                     MainActivity activity = (MainActivity) itemView.getContext();
                                     cardVIewHelper.drawCards(activity.fullDate, itemView.getContext(), activity.findViewById(R.id.constraintLayout));
