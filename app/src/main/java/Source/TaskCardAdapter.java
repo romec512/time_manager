@@ -135,8 +135,8 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                             .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    Task.deleteAll(Task.class, "ID = " + taskId, null);
-                                    TaskDistribution.deleteAll(TaskDistribution.class, "task_id = " + taskId, null);
+                                    TimeManagerRec tm = new TimeManagerRec();
+                                    tm.moveDeletedTaskTime(taskId);
                                     CardVIewHelper cardVIewHelper = new CardVIewHelper();
                                     MainActivity activity = (MainActivity) itemView.getContext();
                                     cardVIewHelper.drawCards(activity.fullDate, itemView.getContext(), activity.findViewById(R.id.constraintLayout));

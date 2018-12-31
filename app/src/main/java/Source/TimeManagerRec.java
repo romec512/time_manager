@@ -220,4 +220,27 @@ public class TimeManagerRec {
             distribution.save();
         }
     }
+
+    public void moveDeletedTaskTime(int deletedTaskId){
+        String[] args = new String[]{String.valueOf(deletedTaskId)};
+        List<TaskDistribution> distributions = TaskDistribution.find(TaskDistribution.class, "task_id = ?", args,
+                null, "task_date", null);
+        for (TaskDistribution distribution: distributions) {
+            String[] dayliArgs = new String[]{distribution.date};
+            List<TaskDistribution> dayDistributions = TaskDistribution.find(TaskDistribution.class, "task_date = ?", dayliArgs,
+                    null, "start_time", null);
+            int offset = distribution.getEndHours() - distribution.getStartHours();
+            for(TaskDistribution dayDistribution : dayDistributions){
+                if(distribution.getStartHours() < dayDistribution.getStartHours()){
+                    int newStartHours = dayDistribution.getStartHours() - offset;
+                    int newStopHours = dayDistribution.getEndHours() - offset;
+                    dayDistribution.setStartTime(newStartHours, distribution.getStartMinutes());
+                    dayDistribution.setStopTime(newStopHours, distribution.getEndMinutes());
+                    dayDistribution.save();
+                }
+            }
+            distribution.delete();
+        }
+        Task.deleteAll(Task.class, "ID = ?", args);
+    }
 }
