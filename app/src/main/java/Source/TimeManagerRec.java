@@ -190,8 +190,26 @@ public class TimeManagerRec {
 
 
      //метод сдвига времени, если пользователь не успевает приступить к выполнению задачи
-    public void moveTaskTime(int offset){
+    //Параметры: смещение(кол-во часов, на которое смещается), выбранная дата(день, в котором смешаются задачи)
+    //индекс выбранной карточки для смещения карточек в дне, начиная с выбранной
 
+    public void moveTaskTime(int offset, String selectedDate, int selectedIndex){
+        String[] args = new String[]{selectedDate};
+        List<TaskDistribution> distributions = TaskDistribution.find(TaskDistribution.class, "task_date = ?",
+                args, null, "start_time", null);
+        for(int i = selectedIndex; i < distributions.size(); i++){
+            int newStartHours = distributions.get(i).getStartHours() + offset;
+            int newStopHours = distributions.get(i).getEndHours() + offset;
+            if(newStartHours >= 24){
+                newStartHours = 24;
+            }
+            if(newStopHours >= 24){
+                newStopHours = 24;
+            }
+            distributions.get(i).setStartTime(newStartHours, distributions.get(i).getStartMinutes());
+            distributions.get(i).setStopTime(newStopHours, distributions.get(i).getEndMinutes());
+            distributions.get(i).save();
+        }
     }
 
     //метод сохранения в бд распределенного времени

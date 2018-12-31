@@ -31,7 +31,7 @@ public class CardVIewHelper {
             cards.add(new TaskCard(distribution.startTime, distribution.stopTime, distribution.task.comment,
                     distribution.task.deadline, distribution.task.priority, distribution.task.getId().intValue(), context));
         }
-            TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards);
+            TaskCardAdapter taskCardAdapter = new TaskCardAdapter(cards,fullDate);
             rv.setLayoutManager(new LinearLayoutManager(context));
             //Устанавливаем фиксированный размер
             rv.setHasFixedSize(true);

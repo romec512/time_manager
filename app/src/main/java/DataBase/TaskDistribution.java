@@ -26,4 +26,28 @@ public class TaskDistribution extends SugarRecord {
         date = _date;
     }
 
+    public int getStartHours(){
+        return Integer.parseInt(startTime.split(":")[0]);
+    }
+
+    public int getStartMinutes(){
+        return Integer.parseInt(startTime.split(":")[1]);
+    }
+
+    public int getEndHours(){
+        return Integer.parseInt(stopTime.split(":")[0]);
+    }
+
+    public int getEndMinutes(){
+        return Integer.parseInt(stopTime.split(":")[1]);
+    }
+
+    public void setStartTime(int hours, int minutes){
+        startTime = hours / 10 + "" + hours % 10 + ":" + minutes / 10 + minutes % 10;
+    }
+
+    public void setStopTime(int hours, int minutes){
+        stopTime = hours / 10 + "" + hours % 10 + ":" + minutes / 10 + minutes % 10;
+    }
+
 }

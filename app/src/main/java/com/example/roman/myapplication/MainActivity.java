@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 .addSubActionView(view)
                 .attachTo(fab)
                 .build();
-
         //обработчик кнопки добавить
         add.setOnClickListener(new View.OnClickListener() {
             @Override

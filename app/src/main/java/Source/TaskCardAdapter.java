@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -23,6 +24,7 @@ import com.example.roman.myapplication.MainActivity;
 import com.example.roman.myapplication.R;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,9 +36,11 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCardViewHolder> {
     List<TaskCard> cards;
+    private static String selectedDate;
     public String [] colors= {"#d0f0c0","#ede674","#f7d420","#f6903e","#f04f54"};
-    public TaskCardAdapter(List<TaskCard> _cards){
+    public TaskCardAdapter(List<TaskCard> _cards, String _selectedDate){
         cards = _cards;
+        selectedDate = _selectedDate;
     }
 
 
@@ -58,6 +62,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         taskCardViewHolder.tvEndDate.setTextColor(Color.parseColor(colors[colorIndex]));
         taskCardViewHolder.tvDeadline.setText(cards.get(i).deadline);
         taskCardViewHolder.taskId = cards.get(i).taskId;
+        taskCardViewHolder.index = i;
     }
 
     @Override
@@ -75,7 +80,7 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
         TextView tvStartDate, tvEndDate, tvComment, tvDeadline;
         SwipeLayout swipeLayout;
         Button buttonDelete, buttonMove;
-        int taskId;
+        int taskId, index;
         public TaskCardViewHolder(@NonNull final View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.card_view);
@@ -161,6 +166,13 @@ public class TaskCardAdapter extends RecyclerView.Adapter<TaskCardAdapter.TaskCa
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     int hours = Integer.parseInt(editText.getText().toString());
+                                    TimeManagerRec tm = new TimeManagerRec();
+                                    // индекс выбранной карточки в списке задач дня, чтобы сдвинуть все карточки, начиная с индекса вниз на hours часов
+                                    tm.moveTaskTime(hours, selectedDate , index);
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    MainActivity activity = (MainActivity) itemView.getContext();
+                                    CardVIewHelper cardVIewHelper = new CardVIewHelper();
+                                    cardVIewHelper.drawCards(activity.fullDate, itemView.getContext(), activity.findViewById(R.id.constraintLayout));
                                 }
                             })
                             .show();

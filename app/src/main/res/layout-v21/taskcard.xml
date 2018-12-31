@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:id="@+id/bottom_wrapper"
-        android:layout_width="182dp"
+        android:layout_width="173dp"
         android:layout_height="134dp"
         android:layout_gravity="right"
         android:background="#ffffff"
@@ -32,6 +32,8 @@
                 android:id="@+id/buttonDelete"
                 android:layout_width="87dp"
                 android:layout_height="106dp"
+                android:layout_marginStart="92dp"
+                android:layout_marginLeft="92dp"
                 android:background="@drawable/trash_alt_background"
                 android:topRightRadius="5dp"
                 card_view:layout_constraintHeight_min="32dp"
@@ -40,11 +42,9 @@
 
             <Button
                 android:id="@+id/buttonMove"
-                android:layout_width="87dp"
+                android:layout_width="92dp"
                 android:layout_height="106dp"
-                android:layout_marginStart="96dp"
-                android:layout_marginLeft="96dp"
-                android:background="@color/bpLight_gray"
+                android:background="@drawable/clock_regular"
                 android:topRightRadius="5dp"
                 card_view:layout_constraintHeight_min="32dp"
                 card_view:layout_constraintStart_toStartOf="parent"
