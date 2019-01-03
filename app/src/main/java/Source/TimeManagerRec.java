@@ -152,7 +152,7 @@ public class TimeManagerRec {
                             endTime = (startHour + 3) % 24;
                         }
                         timingResults.add(new String[]{
-                                (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
+                                (startHour / 10) + "" + (startHour % 10) + ":" + split[1],
                            (endTime / 10) + "" + (endTime % 10) + ":" + split[1],
                            todayStr
                         });
@@ -165,7 +165,7 @@ public class TimeManagerRec {
                             endTime = (startHour + freeHours) % 24;
                         }
                         timingResults.add(new String[]{
-                                (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
+                                (startHour / 10) + "" + (startHour % 10) + ":" + split[1],
                                 (endTime / 10) + "" + (endTime % 10) + ":" + split[1],
                                 todayStr
                         });
@@ -193,7 +193,7 @@ public class TimeManagerRec {
                         }
                     } else if (realHour > startFreeHour) {
                         startFreeHour = realHour;
-                        //Корректируем количество свободного времени    aQ
+                        //Корректируем количество свободного времени
                         freeHours -= realHour - startFreeHour;
                     }
                 }
