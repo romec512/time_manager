@@ -63,6 +63,7 @@ public class TimeManagerRec {
         int dayOfWeek = daysOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1];
         String [] args = new String[]{dayOfWeek + "", FREE_TIME_VARIANT};
         //Выбираем кол-во свободного времени у пользователя в данный день недели
+        if (date == ){}
         Cursor freeTime = database.query("free_time", null, "day_of_week = ? AND free_time_variant = ?",
                 args, null, null, null);
         if(freeTime != null){
@@ -82,6 +83,7 @@ public class TimeManagerRec {
                 }
             }
         }
+
         String [] args1 = new String[]{date};
         Cursor cursor = database.query("tasks_distribution", null, "task_date = ?", args1, null, null, "start_time");
         if(cursor != null){
@@ -103,13 +105,32 @@ public class TimeManagerRec {
                     }
                     freeHours -= busyHour;
                 }while(cursor.moveToNext());
+
                 if(freeHours > 0){
                     cursor.moveToLast();
                     //Время конца предыдущей задачи - это время начала новой
                     String start_time = cursor.getString(cursor.getColumnIndex("stop_time"));
                     String [] split = start_time.split(":");
                     int startHour = Integer.parseInt(split[0]);
+                    int startMinutes = Integer.parseInt(split[1]);
                     int endTime;
+                    String strrealtime;
+                    Date realtime = new Date();
+                    SimpleDateFormat realtimeformat = new SimpleDateFormat("HH :mm");
+                    strrealtime = realtimeformat.format(realtime);
+                    String [] realsplit = strrealtime.split(":");
+                    int realHour = Integer.parseInt(realsplit[0]);
+                    int realMinutes = Integer.parseInt(realsplit[1]);
+                    //Сравниваем текущее время с временем начала свободного времени сегодняшнего дня(для добавления задачи на сегодняшний день)
+                    if(realHour == startHour){
+                            if( realMinutes> startMinutes){
+                                startHour ++;
+                            }
+                        }
+                        else if (realHour> startHour){
+                            startHour = realHour;
+                        }
+
                     if(freeHours >= 3){
                         if(hours < 3){
                             endTime = (startHour + hours) % 24;
@@ -139,6 +160,25 @@ public class TimeManagerRec {
                     }
                 }
             } else {
+                //Если день полностью свободен
+                String start_time = freeTime.getString(freeTime.getColumnIndex("time_start"));
+                String [] split = start_time.split(":");
+                int startMinutes = Integer.parseInt(split[1]);
+                String strrealtime;
+                Date realtime = new Date();
+                SimpleDateFormat realtimeformat = new SimpleDateFormat("HH:mm");
+                strrealtime = realtimeformat.format(realtime);
+                String [] realsplit = strrealtime.split(":");
+                int realHour = Integer.parseInt(realsplit[0]);
+                int realMinutes = Integer.parseInt(realsplit[1]);
+                if(realHour == startFreeHour){
+                    if( realMinutes> startMinutes){
+                        startFreeHour ++;
+                    }
+                }
+                else if (realHour> startFreeHour){
+                    startFreeHour = realHour;
+                }
                 if(freeHours >= 3){
                     int endTime;
                     if(hours < 3){
@@ -149,7 +189,7 @@ public class TimeManagerRec {
                         hours -= 3;
                     }
                     timingResults.add(new String[]{
-                            startFreeTime,
+                            (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
                             (endTime / 10) + "" + (endTime % 10) + ":" + freeSplit[1],
                             todayStr
                     });
