@@ -63,29 +63,35 @@ public class TimeManagerRec {
         int dayOfWeek = daysOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1];
         String [] args = new String[]{dayOfWeek + "", FREE_TIME_VARIANT};
         //Выбираем кол-во свободного времени у пользователя в данный день недели
-        if (date == ){}
+
+        //Считываем количество свободного времени из таблицы
         Cursor freeTime = database.query("free_time", null, "day_of_week = ? AND free_time_variant = ?",
                 args, null, null, null);
-        if(freeTime != null){
-            if(freeTime.moveToFirst()){
-                startFreeTime = freeTime.getString(freeTime.getColumnIndex("time_start"));
-                stopFreeTime = freeTime.getString(freeTime.getColumnIndex("time_stop"));
-                freeSplit = startFreeTime.split(":");
-                int startMinutes, endHour, endMinutes;
-                startFreeHour = Integer.parseInt(freeSplit[0]);
-                startMinutes = Integer.parseInt(freeSplit[1]);
-                String[] stopSplit = stopFreeTime.split(":");
-                endHour = Integer.parseInt(stopSplit[0]);
-                endMinutes = Integer.parseInt(stopSplit[1]);
-                freeHours = endHour - startFreeHour;
-                if(startMinutes > endMinutes){
-                    freeHours--;
+            if (freeTime != null) {
+                if (freeTime.moveToFirst()) {
+                    startFreeTime = freeTime.getString(freeTime.getColumnIndex("time_start"));
+                    stopFreeTime = freeTime.getString(freeTime.getColumnIndex("time_stop"));
+                    freeSplit = startFreeTime.split(":");
+                    int startMinutes, endHour, endMinutes;
+                    startFreeHour = Integer.parseInt(freeSplit[0]);
+                    startMinutes = Integer.parseInt(freeSplit[1]);
+                    String[] stopSplit = stopFreeTime.split(":");
+                    endHour = Integer.parseInt(stopSplit[0]);
+                    endMinutes = Integer.parseInt(stopSplit[1]);
+                    freeHours = endHour - startFreeHour;
+                    if (startMinutes > endMinutes) {
+                        freeHours--;
+                    }
                 }
             }
-        }
 
         String [] args1 = new String[]{date};
         Cursor cursor = database.query("tasks_distribution", null, "task_date = ?", args1, null, null, "start_time");
+        //Для корректировки количества свободного узнаем действительно ли: данный день сегодня?
+        //Локально найдем сегодняшнюю дату
+        Date realdate = new Date();
+        SimpleDateFormat realdateformat = new SimpleDateFormat("dd-MM-YYYY");
+        String strrealdate = realdateformat.format(realdate);
         if(cursor != null){
             //Если у нас уже есть распределенные задачи на эти день
             if(cursor.moveToFirst()){
@@ -116,20 +122,26 @@ public class TimeManagerRec {
                     int endTime;
                     String strrealtime;
                     Date realtime = new Date();
-                    SimpleDateFormat realtimeformat = new SimpleDateFormat("HH :mm");
+                    SimpleDateFormat realtimeformat = new SimpleDateFormat("HH:mm");
                     strrealtime = realtimeformat.format(realtime);
                     String [] realsplit = strrealtime.split(":");
                     int realHour = Integer.parseInt(realsplit[0]);
                     int realMinutes = Integer.parseInt(realsplit[1]);
-                    //Сравниваем текущее время с временем начала свободного времени сегодняшнего дня(для добавления задачи на сегодняшний день)
-                    if(realHour == startHour){
-                            if( realMinutes> startMinutes){
-                                startHour ++;
+                    //Узнаем выбранный день-сегодня?
+                    if(date == strrealdate) {
+                        //Сравниваем текущее время с временем начала свободного времени сегодняшнего дня(для добавления задачи на сегодняшний день)
+                        if (realHour == startHour) {
+                            if (realMinutes > startMinutes) {
+                                startHour++;
+                                //Корректируем количество свободного времени
+                                freeHours -= 1;
                             }
-                        }
-                        else if (realHour> startHour){
+                        } else if (realHour > startHour) {
                             startHour = realHour;
+                            //Корректируем количество свободного времени
+                            freeHours -= realHour - startHour;
                         }
+                    }
 
                     if(freeHours >= 3){
                         if(hours < 3){
@@ -171,13 +183,15 @@ public class TimeManagerRec {
                 String [] realsplit = strrealtime.split(":");
                 int realHour = Integer.parseInt(realsplit[0]);
                 int realMinutes = Integer.parseInt(realsplit[1]);
-                if(realHour == startFreeHour){
-                    if( realMinutes> startMinutes){
-                        startFreeHour ++;
+                //Узнаем выбранный день-сегодня?
+                if(date == strrealdate) {
+                    if (realHour == startFreeHour) {
+                        if (realMinutes > startMinutes) {
+                            startFreeHour++;
+                        }
+                    } else if (realHour > startFreeHour) {
+                        startFreeHour = realHour;
                     }
-                }
-                else if (realHour> startFreeHour){
-                    startFreeHour = realHour;
                 }
                 if(freeHours >= 3){
                     int endTime;
