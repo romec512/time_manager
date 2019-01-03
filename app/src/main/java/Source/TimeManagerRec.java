@@ -152,7 +152,7 @@ public class TimeManagerRec {
                             endTime = (startHour + 3) % 24;
                         }
                         timingResults.add(new String[]{
-                           start_time,
+                                (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
                            (endTime / 10) + "" + (endTime % 10) + ":" + split[1],
                            todayStr
                         });
@@ -165,7 +165,7 @@ public class TimeManagerRec {
                             endTime = (startHour + freeHours) % 24;
                         }
                         timingResults.add(new String[]{
-                                start_time,
+                                (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
                                 (endTime / 10) + "" + (endTime % 10) + ":" + split[1],
                                 todayStr
                         });
@@ -188,9 +188,13 @@ public class TimeManagerRec {
                     if (realHour == startFreeHour) {
                         if (realMinutes > startMinutes) {
                             startFreeHour++;
+                            //Корректируем количество свободного времени
+                            freeHours--;
                         }
                     } else if (realHour > startFreeHour) {
                         startFreeHour = realHour;
+                        //Корректируем количество свободного времени    aQ
+                        freeHours -= realHour - startFreeHour;
                     }
                 }
                 if(freeHours >= 3){
@@ -217,7 +221,7 @@ public class TimeManagerRec {
                         hours -= freeHours;
                     }
                     timingResults.add(new String[]{
-                            startFreeTime,
+                            (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
                             (endTime / 10) + "" + (endTime % 10) + ":" + freeSplit[1],
                             todayStr
                     });
