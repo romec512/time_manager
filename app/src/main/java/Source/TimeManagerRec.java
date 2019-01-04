@@ -128,7 +128,7 @@ public class TimeManagerRec {
                     int realHour = Integer.parseInt(realsplit[0]);
                     int realMinutes = Integer.parseInt(realsplit[1]);
                     //Узнаем выбранный день-сегодня?
-                    if(date == strrealdate) {
+                    if(date.compareTo(strrealdate) == 0) {
                         //Сравниваем текущее время с временем начала свободного времени сегодняшнего дня(для добавления задачи на сегодняшний день)
                         if (realHour == startHour) {
                             if (realMinutes > startMinutes) {
@@ -184,7 +184,7 @@ public class TimeManagerRec {
                 int realHour = Integer.parseInt(realsplit[0]);
                 int realMinutes = Integer.parseInt(realsplit[1]);
                 //Узнаем выбранный день-сегодня?
-                if(date == strrealdate) {
+                if(date.compareTo(strrealdate) == 0){
                     if (realHour == startFreeHour) {
                         if (realMinutes > startMinutes) {
                             startFreeHour++;
