@@ -1,9 +1,18 @@
 package com.example.roman.myapplication;
 
+import android.app.AlarmManager;
+import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Parcelable;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -32,6 +41,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import DataBase.Task;
+import DataBase.TaskDistribution;
 import Source.CardVIewHelper;
 import Source.DBHelper;
 import Source.TaskCard;
@@ -56,6 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         headerSelectedMonthName = (TextView)findViewById(R.id.monthName);
         selectedDate = (TextView)findViewById(R.id.selected_date);
+
+        DBHelper dbHelper = new DBHelper(this);
+        dbHelper.onCreate(dbHelper.getWritableDatabase());
+
+        startNotifications();
+
 
         ImageView icon = new ImageView(this);
         icon.setImageResource(R.drawable.logo2);
@@ -135,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         month = date.getMonth();
         DateFormat dayFormat = new SimpleDateFormat("dd");
         day = dayFormat.format(date.getTime());
-        fullDate = day + "-" + (month+1) + "-" + year;
+        fullDate = day + "-" + (month+1)/10 + (month+1)%10 + "-" + year;
 
 
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.calendarView);
@@ -148,6 +165,17 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(dateClicked.getTime());
                 fullDate = day + "-" + month + "-" + (1900 + dateClicked.getYear());
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo2, options);
+//
+                NotificationCompat.Builder builder =
+                        new NotificationCompat.Builder(MainActivity.this)
+                                .setSmallIcon(R.drawable.logo1)
+                                .setContentTitle("Пора браться за выполнение задачи!")
+                                .setContentText("test")
+                                .setAutoCancel(true)
+                                .setLargeIcon(bitmap);
+                builder.build();
             }
 
             @Override
@@ -229,7 +257,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         return;
+    }
+
+    private void startNotifications(){
+        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ListenerService.class);
+        startService(intent);
     }
 }
