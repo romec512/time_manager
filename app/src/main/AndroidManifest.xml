@@ -4,6 +4,7 @@
     package="com.example.roman.myapplication">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name="com.orm.SugarApp"

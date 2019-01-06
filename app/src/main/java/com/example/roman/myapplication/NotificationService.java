@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.os.Parcelable;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -85,7 +86,8 @@ public class NotificationService extends Service {
                                 .setContentTitle("Пора браться за выполнение задачи!")
                                 .setContentText(distribution.task.comment)
                                 .setAutoCancel(true)
-                                .setLargeIcon(bitmap);
+                                .setLargeIcon(bitmap)
+                                .setVibrate(new long[]{1000, 2000, 1000, 2000});
                 Notification notification = builder.build();
                 NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.notify(3, notification);
