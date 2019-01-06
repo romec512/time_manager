@@ -140,6 +140,11 @@ public class TimeManagerRec {
                             startHour = realHour;
                             //Корректируем количество свободного времени
                             freeHours -= realHour - startHour;
+                            if (realMinutes > startMinutes) {
+                                startHour++;
+                                //Корректируем количество свободного времени
+                                freeHours -= 1;
+                            }
                         }
                     }
 
@@ -195,6 +200,11 @@ public class TimeManagerRec {
                         startFreeHour = realHour;
                         //Корректируем количество свободного времени
                         freeHours -= realHour - startFreeHour;
+                        if (realMinutes > startMinutes) {
+                            startFreeHour++;
+                            //Корректируем количество свободного времени
+                            freeHours--;
+                        }
                     }
                 }
                 if(freeHours >= 3){
