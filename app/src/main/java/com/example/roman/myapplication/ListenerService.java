@@ -33,6 +33,8 @@ public class ListenerService extends Service {
         String action = intent.getAction();
         if (action != null) {
             if (action.equals("STOP_FOREGROUND")) {
+                Intent notifyService = new Intent(this, NotificationService.class);
+                stopService(notifyService);
                 stopSelf();
             }
         }
