@@ -26,26 +26,40 @@ public class TimeManagerRec {
     private int [] daysOfWeeks = {6,0,1,2,3,4,5};
     public int impossibleTime;
     private String _today;
+    private float distrRatio = 0;
+    private int initalHours = 0;
+    private String initalDate;
 
     public TimeManagerRec(DBHelper _dbHelper, String _deadline){
         timingResults = new ArrayList<>();
         dbHelper = _dbHelper;
         deadline = _deadline;
+        impossibleTime = 0;
     }
 
     public TimeManagerRec(){
         Date todayDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
         _today = format.format(todayDate);
+        impossibleTime = 0;
     }
 
     public void timing(int hours, String date) {
+        if(initalHours == 0){
+            initalHours = hours;
+            initalDate = date;
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String todayStr = date;
         if (todayStr.compareTo(deadline) == 0 || hours <= 0) {
             if(hours > 0){
                 isPossible = false;
                 impossibleTime = hours;
+                distrRatio += (float)0.25;
+                timingResults.clear();
+                timing(initalHours, initalDate);
+            } else {
+                isPossible = true;
             }
             return;
         }
@@ -81,6 +95,17 @@ public class TimeManagerRec {
                     freeHours = endHour - startFreeHour;
                     if (startMinutes > endMinutes) {
                         freeHours--;
+                    }
+                    Date todayDate = new Date();
+                    String todayDateStr = dateFormat.format(todayDate);
+                    if(date.compareTo(todayDateStr) == 0){
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+                        int currentHour = Integer.parseInt(timeFormat.format(todayDate).split(":")[0]);
+                        if(currentHour < endHour){
+                            freeHours = endHour - currentHour;
+                        } else {
+                            freeHours = 0;
+                        }
                     }
                 }
             }
@@ -137,9 +162,10 @@ public class TimeManagerRec {
                                 freeHours -= 1;
                             }
                         } else if (realHour > startHour) {
+                            int endFreeTime = Integer.parseInt(stopFreeTime.split(":")[0]);
+                            freeHours = endFreeTime - realHour;
                             startHour = realHour;
                             //Корректируем количество свободного времени
-                            freeHours -= realHour - startHour;
                             if (realMinutes > startMinutes) {
                                 startHour++;
                                 //Корректируем количество свободного времени
@@ -153,8 +179,18 @@ public class TimeManagerRec {
                             endTime = (startHour + hours) % 24;
                             hours = 0;
                         } else {
-                            hours -= 3;
-                            endTime = (startHour + 3) % 24;
+                            if(impossibleTime == 0) {
+                                hours -= 3;
+                                endTime = (startHour + 3) % 24;
+                            } else { //Если алгоритм не смог найти распределение по 3 часа и у него осталось "лишнее" время
+                                int distr = (int)((freeHours - 3) * distrRatio + 3);
+                                if(distr > hours){
+                                    distr = hours;
+                                }
+                                hours -= distr;
+                                endTime = (startHour + distr) % 24;
+                                impossibleTime -= distr;
+                            }
                         }
                         timingResults.add(new String[]{
                                 (startHour / 10) + "" + (startHour % 10) + ":" + split[1],
@@ -180,7 +216,10 @@ public class TimeManagerRec {
                 //Если день полностью свободен
                 String start_time = freeTime.getString(freeTime.getColumnIndex("time_start"));
                 String [] split = start_time.split(":");
+                String end_time = freeTime.getString(freeTime.getColumnIndex("time_stop"));
+                String [] endFreeTimeSplit = end_time.split(":");
                 int startMinutes = Integer.parseInt(split[1]);
+                int endFreeHours = Integer.parseInt(endFreeTimeSplit[0]);
                 String strrealtime;
                 Date realtime = new Date();
                 SimpleDateFormat realtimeformat = new SimpleDateFormat("HH:mm");
@@ -197,9 +236,9 @@ public class TimeManagerRec {
                             freeHours--;
                         }
                     } else if (realHour > startFreeHour) {
+                        freeHours =  endFreeHours - realHour;
                         startFreeHour = realHour;
                         //Корректируем количество свободного времени
-                        freeHours -= realHour - startFreeHour;
                         if (realMinutes > startMinutes) {
                             startFreeHour++;
                             //Корректируем количество свободного времени
@@ -213,8 +252,18 @@ public class TimeManagerRec {
                         endTime = (startFreeHour + hours) % 24;
                         hours = 0;
                     } else {
-                        endTime = (startFreeHour + 3) % 24;
-                        hours -= 3;
+                        if(impossibleTime == 0) {
+                            hours -= 3;
+                            endTime = (startFreeHour + 3) % 24;
+                        } else { //Если алгоритм не смог найти распределение по 3 часа и у него осталось "лишнее" время
+                            int distr = (int)((freeHours - 3) * distrRatio + 3);
+                            if(distr > hours) {
+                                distr = hours;
+                            }
+                            hours -= distr;
+                            endTime = (startFreeHour + distr) % 24;
+                            impossibleTime -= distr;
+                        }
                     }
                     timingResults.add(new String[]{
                             (startFreeHour / 10) + "" + (startFreeHour % 10) + ":" + freeSplit[1],
@@ -224,10 +273,10 @@ public class TimeManagerRec {
                 } else {
                     int endTime;
                     if(hours < freeHours){
-                        endTime = (Integer.parseInt(freeSplit[0]) + hours) % 24;
+                        endTime = (startFreeHour + hours) % 24;
                         hours = 0;
                     } else {
-                        endTime = Integer.parseInt(freeSplit[0]) + freeHours;
+                        endTime = startFreeHour + freeHours;
                         hours -= freeHours;
                     }
                     timingResults.add(new String[]{

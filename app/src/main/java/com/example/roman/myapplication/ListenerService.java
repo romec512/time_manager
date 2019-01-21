@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.Process;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
@@ -33,15 +34,18 @@ public class ListenerService extends Service {
         String action = intent.getAction();
         if (action != null) {
             if (action.equals("STOP_FOREGROUND")) {
-                Intent notifyService = new Intent(this, NotificationService.class);
-                stopService(notifyService);
+//                Intent notifyService = new Intent(this, NotificationService.class);
+//                stopService(notifyService);
+//                notificationManager.cancel(3);
+//                Process.killProcess(Process.myPid());
                 stopSelf();
+                return START_STICKY;
             }
         }
         AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
         Intent intent1 = new Intent(getApplicationContext(), NotificationReceiver.class);
         PendingIntent pIntent = PendingIntent.getBroadcast(this, 0, intent1, 0);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+1000, 5000, pIntent);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, 5000, pIntent);
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo2, options);
         NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
