@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.orm.SugarRecord;
 
+import java.lang.reflect.Type;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +22,7 @@ public class TimeManagerRec {
     private static final String FREE_TIME_VARIANT = "3";
 
     public List<String[]> timingResults;
-    public boolean isPossible = true;
+    public DistributionState isPossible = DistributionState.SUCCESS;
     public DBHelper dbHelper;
     private int [] daysOfWeeks = {6,0,1,2,3,4,5};
     public int impossibleTime;
@@ -53,13 +54,13 @@ public class TimeManagerRec {
         String todayStr = date;
         if (todayStr.compareTo(deadline) == 0 || hours <= 0) {
             if(hours > 0){
-                isPossible = false;
+                isPossible = DistributionState.IMPOSSIBLE;
                 impossibleTime = hours;
                 distrRatio += (float)0.25;
                 timingResults.clear();
                 timing(initalHours, initalDate);
             } else {
-                isPossible = true;
+                isPossible = DistributionState.SUCCESS;
             }
             return;
         }
@@ -93,6 +94,10 @@ public class TimeManagerRec {
                     endHour = Integer.parseInt(stopSplit[0]);
                     endMinutes = Integer.parseInt(stopSplit[1]);
                     freeHours = endHour - startFreeHour;
+                    if(startFreeHour == 0 && endHour == 0){ // Если время свободное время не указано
+                        isPossible = DistributionState.FREE_TIME_IS_EMPTY;
+                        return;
+                    }
                     if (startMinutes > endMinutes) {
                         freeHours--;
                     }

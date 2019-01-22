@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 import DataBase.Task;
 import Source.DBHelper;
+import Source.DistributionState;
 import Source.TimeManager;
 import Source.TimeManagerRec;
 
@@ -82,14 +83,19 @@ public class NewTask extends AppCompatActivity implements View.OnClickListener{
         Date today = new Date();
         SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
         tm.timing(time, format1.format(today));
-        if(tm.isPossible) {
+        if(tm.isPossible == DistributionState.SUCCESS) {
             Task task = new Task(deadline, question, time, rating + 1);
             task.save();
             tm.distributeTask(task.getId());
-        } else {
+        } else if (tm.isPossible == DistributionState.IMPOSSIBLE){
             Toast.makeText(this, "К сожалению, в вашем расписании не хватает " + tm.impossibleTime +
                     " часов для добавления этой задачи", Toast.LENGTH_SHORT).show();
             return ;
+        } else if (tm.isPossible == DistributionState.FREE_TIME_IS_EMPTY){
+            Toast.makeText(this, "Вы не заполнили свое свободное время!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MyGraphics.class);
+            startActivity(intent);
+            return;
         }
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("new_task_created", true);
