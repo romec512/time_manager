@@ -92,8 +92,10 @@ public class NotificationService extends Service {
                 NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                 notificationManager.notify(3, notification);
                 stopSelf();
+                return Service.START_NOT_STICKY;
             }
         }
+        stopSelf();
         return Service.START_NOT_STICKY;
     }
 }

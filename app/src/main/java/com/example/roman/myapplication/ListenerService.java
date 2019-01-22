@@ -31,13 +31,14 @@ public class ListenerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         String action = intent.getAction();
         if (action != null) {
             if (action.equals("STOP_FOREGROUND")) {
-//                Intent notifyService = new Intent(this, NotificationService.class);
-//                stopService(notifyService);
-//                notificationManager.cancel(3);
-//                Process.killProcess(Process.myPid());
+                Intent notifyService = new Intent(this, NotificationService.class);
+                stopService(notifyService);
+                notificationManager.cancel(3);
+                Process.killProcess(Process.myPid());
                 stopSelf();
                 return START_STICKY;
             }
@@ -48,7 +49,6 @@ public class ListenerService extends Service {
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, 5000, pIntent);
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo2, options);
-        NotificationManager notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Intent notificationIntent = new Intent(this, ListenerService.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 

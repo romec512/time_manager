@@ -101,9 +101,9 @@ public class TimeManagerRec {
                     if(date.compareTo(todayDateStr) == 0){
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
                         int currentHour = Integer.parseInt(timeFormat.format(todayDate).split(":")[0]);
-                        if(currentHour < endHour){
+                        if(currentHour < endHour && currentHour > startFreeHour){
                             freeHours = endHour - currentHour;
-                        } else {
+                        } else if(currentHour >= endHour){
                             freeHours = 0;
                         }
                     }
