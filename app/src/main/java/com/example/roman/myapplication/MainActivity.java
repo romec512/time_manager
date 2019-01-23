@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ import java.util.List;
 
 import DataBase.Task;
 import DataBase.TaskDistribution;
+import Source.AnimationHelper;
 import Source.CardVIewHelper;
 import Source.DBHelper;
 import Source.TaskCard;
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView icon = new ImageView(this);
         icon.setImageResource(R.drawable.logo2);
         final FloatingActionButton fab = new FloatingActionButton.Builder(this).setContentView(icon).build();
-
         SubActionButton.Builder builder = new SubActionButton.Builder(this);
 
         ImageView addIcon = new ImageView(this);
@@ -88,22 +89,18 @@ public class MainActivity extends AppCompatActivity {
         playIcon.setImageResource(R.drawable.sett_button);
         SubActionButton play = builder.setContentView(playIcon).build();
 
-        ImageView removeIcon = new ImageView(this);
-        removeIcon.setImageResource(R.drawable.play_button);
-        SubActionButton remove = builder.setContentView(removeIcon).build();
-
         ImageView showIcon = new ImageView(this);
         showIcon.setImageResource(R.drawable.view_button);
         SubActionButton view = builder.setContentView(showIcon).build();
-
-
         final FloatingActionMenu fam = new FloatingActionMenu.Builder(this)
-                .addSubActionView(remove)
                 .addSubActionView(play)
                 .addSubActionView(add)
-                .addSubActionView(view)
+//                .addSubActionView(view)
                 .attachTo(fab)
+                .setStartAngle(202) // 180 градусов - это 9 часов на цифербате
+                .setEndAngle(248) // 270 градусов - 12 часов на циферблате(верх)
                 .build();
+        fam.updateItemPositions();
         //обработчик кнопки добавить
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,15 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Сейчас эта функция заблокирована, она будет добавлена в следующем обновлении!", Toast.LENGTH_SHORT).show();
-                fam.close(true);
-            }
-        });
-
-
         //Обработчик нажатия на кнопку просмотра задач
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
         DateFormat dayFormat = new SimpleDateFormat("dd");
         day = dayFormat.format(date.getTime());
         fullDate = day + "-" + (month+1)/10 + (month+1)%10 + "-" + year;
+        CardVIewHelper cardVIewHelper = new CardVIewHelper();
+        cardVIewHelper.drawCards(fullDate, MainActivity.this, findViewById(R.id.constraintLayout));
 
 
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.calendarView);
@@ -165,17 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(dateClicked.getTime());
                 fullDate = day + "-" + month + "-" + (1900 + dateClicked.getYear());
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo2, options);
-//
-                NotificationCompat.Builder builder =
-                        new NotificationCompat.Builder(MainActivity.this)
-                                .setSmallIcon(R.drawable.logo1)
-                                .setContentTitle("Пора браться за выполнение задачи!")
-                                .setContentText("test")
-                                .setAutoCancel(true)
-                                .setLargeIcon(bitmap);
-                builder.build();
+                CardVIewHelper cardVIewHelper = new CardVIewHelper();
+                cardVIewHelper.drawCards(fullDate, MainActivity.this, findViewById(R.id.constraintLayout));
+                AnimationHelper animationHelper = new AnimationHelper(cardVIewHelper.rv);
+                animationHelper.slideIn(380 * cardVIewHelper.itemCount);
+                selectedDate.setText(day + " " + monthsWithPostfix[MainActivity.this.month]);
             }
 
             @Override

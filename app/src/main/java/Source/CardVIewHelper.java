@@ -19,9 +19,11 @@ import DataBase.TaskDistribution;
 import static java.lang.Integer.parseInt;
 
 public class CardVIewHelper {
+    public RecyclerView rv;
+    public int itemCount;
     public void drawCards(String fullDate, Context context,View view){
         LinearLayout sv = (LinearLayout)view.findViewById(R.id.Scroll_layout);
-        RecyclerView rv = (RecyclerView)view.findViewById(R.id.recyclerView);
+        rv = (RecyclerView)view.findViewById(R.id.recyclerView);
         DBHelper dbHelper = new DBHelper(  context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String [] args = new String[]{ fullDate };
@@ -40,5 +42,6 @@ public class CardVIewHelper {
             //Задаем ширину под все карточки
             rv.setMinimumHeight(380 * taskCardAdapter.getItemCount());
             rv.setAdapter(taskCardAdapter);
+            itemCount = taskCardAdapter.getItemCount();
     }
 }
