@@ -1,9 +1,18 @@
 package com.example.roman.myapplication;
 
+import android.app.AlarmManager;
+import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Parcelable;
+import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -11,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +42,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import DataBase.Task;
+import DataBase.TaskDistribution;
+import Source.AnimationHelper;
 import Source.CardVIewHelper;
 import Source.DBHelper;
 import Source.TaskCard;
@@ -57,10 +70,15 @@ public class MainActivity extends AppCompatActivity {
         headerSelectedMonthName = (TextView)findViewById(R.id.monthName);
         selectedDate = (TextView)findViewById(R.id.selected_date);
 
+        DBHelper dbHelper = new DBHelper(this);
+        dbHelper.onCreate(dbHelper.getWritableDatabase());
+
+        startNotifications();
+
+
         ImageView icon = new ImageView(this);
         icon.setImageResource(R.drawable.logo2);
         final FloatingActionButton fab = new FloatingActionButton.Builder(this).setContentView(icon).build();
-
         SubActionButton.Builder builder = new SubActionButton.Builder(this);
 
         ImageView addIcon = new ImageView(this);
@@ -71,22 +89,18 @@ public class MainActivity extends AppCompatActivity {
         playIcon.setImageResource(R.drawable.sett_button);
         SubActionButton play = builder.setContentView(playIcon).build();
 
-        ImageView removeIcon = new ImageView(this);
-        removeIcon.setImageResource(R.drawable.play_button);
-        SubActionButton remove = builder.setContentView(removeIcon).build();
-
         ImageView showIcon = new ImageView(this);
         showIcon.setImageResource(R.drawable.view_button);
         SubActionButton view = builder.setContentView(showIcon).build();
-
-
         final FloatingActionMenu fam = new FloatingActionMenu.Builder(this)
-                .addSubActionView(remove)
                 .addSubActionView(play)
                 .addSubActionView(add)
-                .addSubActionView(view)
+//                .addSubActionView(view)
                 .attachTo(fab)
+                .setStartAngle(202) // 180 градусов - это 9 часов на цифербате
+                .setEndAngle(248) // 270 градусов - 12 часов на циферблате(верх)
                 .build();
+        fam.updateItemPositions();
         //обработчик кнопки добавить
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,15 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Сейчас эта функция заблокирована, она будет добавлена в следующем обновлении!", Toast.LENGTH_SHORT).show();
-                fam.close(true);
-            }
-        });
-
-
         //Обработчик нажатия на кнопку просмотра задач
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
         month = date.getMonth();
         DateFormat dayFormat = new SimpleDateFormat("dd");
         day = dayFormat.format(date.getTime());
-        fullDate = day + "-" + (month+1) + "-" + year;
+        fullDate = day + "-" + (month+1)/10 + (month+1)%10 + "-" + year;
+        CardVIewHelper cardVIewHelper = new CardVIewHelper();
+        cardVIewHelper.drawCards(fullDate, MainActivity.this, findViewById(R.id.constraintLayout));
 
 
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.calendarView);
@@ -148,6 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 DateFormat dayFormat = new SimpleDateFormat("dd");
                 day = dayFormat.format(dateClicked.getTime());
                 fullDate = day + "-" + month + "-" + (1900 + dateClicked.getYear());
+                CardVIewHelper cardVIewHelper = new CardVIewHelper();
+                cardVIewHelper.drawCards(fullDate, MainActivity.this, findViewById(R.id.constraintLayout));
+                AnimationHelper animationHelper = new AnimationHelper(cardVIewHelper.rv);
+                animationHelper.slideIn(380 * cardVIewHelper.itemCount);
+                selectedDate.setText(day + " " + monthsWithPostfix[MainActivity.this.month]);
             }
 
             @Override
@@ -229,7 +241,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         return;
+    }
+
+    private void startNotifications(){
+        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ListenerService.class);
+        startService(intent);
     }
 }

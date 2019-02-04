@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.roman.myapplication">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -36,6 +39,20 @@
         <activity android:name=".NewTask" />
         <activity android:name=".MyGraphics" />
         <activity android:name=".ActivityDeadline"></activity>
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".ListenerService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
